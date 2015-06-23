@@ -9,6 +9,10 @@ php:
   - 7.0
   - hhvm
 
+matrix:
+  allow_failures:
+    - php: 7.0 # https://github.com/phpspec/phpspec/issues/659
+
 cache:
   directories:
     - $HOME/.composer/cache

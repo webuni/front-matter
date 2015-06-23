@@ -28,7 +28,7 @@ class FrontMatterSpec extends ObjectBehavior
     {
         $document = $this->parse($string);
 
-        $document->shouldBeAnInstanceOf(Document::class);
+        $document->shouldBeAnInstanceOf('Webuni\FrontMatter\Document');
         $document->getData()->shouldBe($data);
         $document->getContent()->shouldBe($content);
     }

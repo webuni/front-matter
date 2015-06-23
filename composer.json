@@ -17,7 +17,6 @@
         "symfony/yaml": "^2.3"
     },
     "require-dev": {
-        "php": ">=5.5",
         "twig/twig": "^1.12",
         "mthaml/mthaml": "^1.2",
         "fabpot/php-cs-fixer": "^1.9",
