@@ -52,7 +52,8 @@ class FrontMatterFilter implements FilterInterface
     public function filter($content, array $context, $options)
     {
         $document = $this->parser->parse($content);
+        $document->setContent($this->filter->filter($document, $context, $options));
 
-        return $this->filter->filter($document, $context, $options);
+        return $document;
     }
 }

@@ -53,6 +53,6 @@ class FrontMatterFilterSpec extends ObjectBehavior
         $this->frontMatter->parse($content = "---\n----\nstring")->shouldBeCalled()->willReturn($document);
         $this->filter->filter($document, $context = [], $options = [])->shouldBeCalled()->willReturn('string');
 
-        $this->filter($content, $context, $options)->shouldBe('string');
+        $this->filter($content, $context, $options)->shouldBe($document);
     }
 }
