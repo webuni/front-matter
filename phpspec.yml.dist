@@ -1,0 +1,8 @@
+suites:
+    default:
+        namespace: Webuni\FrontMatter
+        psr4_prefix: Webuni\FrontMatter
+
+extensions:
+    - Coduo\PhpSpec\DataProvider\DataProviderExtension
+    - Memio\SpecGen\MemioSpecGenExtension
