@@ -14,36 +14,34 @@ namespace Webuni\FrontMatter;
 use Webuni\FrontMatter\Processor\ProcessorInterface;
 use Webuni\FrontMatter\Processor\YamlProcessor;
 
-final class FrontMatter implements FrontMatterInterface
+class FrontMatter implements FrontMatterInterface
 {
     private $startSep;
     private $endSep;
     private $processor;
     private $regexp;
 
-    public function __construct($startSep = '---', $endSep = '---', ProcessorInterface $processor = null)
+    public function __construct(ProcessorInterface $processor = null, $startSep = '---', $endSep = '---')
     {
         $this->startSep = $startSep;
         $this->endSep = $endSep;
         $this->processor = $processor ?: new YamlProcessor();
+
         $this->regexp = '{^(?:'.preg_quote($startSep).")[\r\n|\n]*(.*?)[\r\n|\n]+(?:".preg_quote($endSep).")[\r\n|\n]*(.*)$}s";
     }
 
     /**
      * {@inheritdoc}
      */
-    public function parse($source, $default = null)
+    public function parse($source)
     {
         if (preg_match($this->regexp, $source, $matches) === 1) {
-            $data = [];
-            if ('' !== trim($matches[1])) {
-                $data = $this->processor->parse(trim($matches[1]));
-            }
+            $data = '' !== trim($matches[1]) ? $this->processor->parse(trim($matches[1])) : [];
 
-            return new Document($matches[2], array_merge((array) $default, $data));
+            return new Document($matches[2], $data);
         }
 
-        return new Document($source, (array) $default);
+        return new Document($source);
     }
 
     /**

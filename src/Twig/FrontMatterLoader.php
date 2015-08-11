@@ -28,7 +28,7 @@ class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInte
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function getSource($name)
     {
@@ -38,7 +38,7 @@ class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInte
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function getCacheKey($name)
     {
@@ -46,7 +46,7 @@ class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInte
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function isFresh($name, $time)
     {

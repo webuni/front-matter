@@ -19,12 +19,11 @@ interface FrontMatterInterface
     /**
      * Parse source.
      *
-     * @param string|mixed $source  The source
-     * @param array|mixed  $default The default data
+     * @param string|mixed $source The source
      *
      * @return Document
      */
-    public function parse($source, $default = null);
+    public function parse($source);
 
     /**
      * Dump document.

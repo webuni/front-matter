@@ -31,7 +31,7 @@ class FrontMatterFilter implements FilterInterface
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function isOptimizable(RendererAbstract $renderer, Filter $node, $options)
     {
@@ -39,7 +39,7 @@ class FrontMatterFilter implements FilterInterface
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function optimize(RendererAbstract $renderer, Filter $node, $options)
     {
@@ -47,7 +47,7 @@ class FrontMatterFilter implements FilterInterface
     }
 
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public function filter($content, array $context, $options)
     {

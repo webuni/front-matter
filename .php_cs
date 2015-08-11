@@ -25,6 +25,5 @@ return Symfony\CS\Config\Config::create()
         'ordered_use',
         'short_array_syntax',
     ))
-    ->setUsingCache(true)
     ->finder($finder)
 ;

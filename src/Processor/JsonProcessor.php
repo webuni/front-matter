@@ -11,28 +11,19 @@
 
 namespace Webuni\FrontMatter\Processor;
 
-use Symfony\Component\Yaml\Yaml;
-
 /**
- * The YAML processor.
+ * The JSON processor.
  *
  * @author Martin Hasoň <martin.hason@gmail.com>
  */
-class YamlProcessor implements ProcessorInterface
+class JsonProcessor implements ProcessorInterface
 {
-    private $yaml;
-
-    public function __construct(Yaml $yaml = null)
-    {
-        $this->yaml = $yaml ?: new Yaml();
-    }
-
     /**
      * {@inheritdoc}
      */
     public function parse($string)
     {
-        return $this->yaml->parse($string);
+        return json_decode($string);
     }
 
     /**
@@ -44,6 +35,6 @@ class YamlProcessor implements ProcessorInterface
             return '';
         }
 
-        return $this->yaml->dump($data);
+        return json_encode($data);
     }
 }
