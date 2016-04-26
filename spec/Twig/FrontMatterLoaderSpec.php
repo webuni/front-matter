@@ -15,6 +15,9 @@ use PhpSpec\ObjectBehavior;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 
+/**
+ * @mixin \Webuni\FrontMatter\Twig\FrontMatterLoader
+ */
 class FrontMatterLoaderSpec extends ObjectBehavior
 {
     private $frontMatter;

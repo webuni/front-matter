@@ -20,7 +20,6 @@ return Symfony\CS\Config\Config::create()
     ->level(Symfony\CS\FixerInterface::SYMFONY_LEVEL)
     ->fixers(array(
         'header_comment',
-        'align_double_arrow',
         'newline_after_open_tag',
         'ordered_use',
         'short_array_syntax',
