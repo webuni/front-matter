@@ -21,6 +21,7 @@
         "symfony/yaml": "^2.3|^3.0"
     },
     "require-dev": {
+        "nette/neon": "^2.2",
         "twig/twig": "^1.27|^2.0",
         "mthaml/mthaml": "^1.2",
         "phpunit/phpunit": "^5.4",

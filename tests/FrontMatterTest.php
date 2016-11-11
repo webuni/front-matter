@@ -15,6 +15,7 @@ namespace Webuni\FrontMatter\Tests;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Processor\JsonProcessor;
+use Webuni\FrontMatter\Processor\NeonProcessor;
 
 class FrontMatterTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,9 +27,7 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
         $frontMatter = new FrontMatter();
         $document = $frontMatter->parse($string);
 
-        $this->assertInstanceOf(Document::class, $document);
-        $this->assertEquals($data, $document->getData());
-        $this->assertEquals($content, $document->getContent());
+        $this->assertDocument($data, $content, $document);
     }
 
     /**
@@ -50,9 +49,7 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
         $frontMatter = new FrontMatter(null, '<!--', '-->');
         $document = $frontMatter->parse($string);
 
-        $this->assertInstanceOf(Document::class, $document);
-        $this->assertEquals($data, $document->getData());
-        $this->assertEquals($content, $document->getContent());
+        $this->assertDocument($data, $content, $document);
     }
 
     /**
@@ -72,12 +69,9 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
     public function testParseJson($string, $data, $content)
     {
         $frontMatter = new FrontMatter(new JsonProcessor());
-
         $document = $frontMatter->parse($string);
 
-        $this->assertInstanceOf(Document::class, $document);
-        $this->assertEquals($data, $document->getData());
-        $this->assertEquals($content, $document->getContent());
+        $this->assertDocument($data, $content, $document);
     }
 
     /**
@@ -88,6 +82,28 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
         $frontMatter = new FrontMatter(new JsonProcessor());
 
         $document = new Document($content, $data);
+        $this->assertEquals($string, $frontMatter->dump($document));
+    }
+
+    /**
+     * @dataProvider getYaml
+     */
+    public function testParseNeon($string, $data, $content)
+    {
+        $frontMatter = new FrontMatter(new NeonProcessor());
+        $document = $frontMatter->parse($string);
+
+        $this->assertDocument($data, $content, $document);
+    }
+
+    /**
+     * @dataProvider getYaml
+     */
+    public function testDumpNeon($string, $data, $content)
+    {
+        $frontMatter = new FrontMatter(new NeonProcessor());
+        $document = new Document($content, $data);
+
         $this->assertEquals($string, $frontMatter->dump($document));
     }
 
@@ -116,5 +132,11 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
             ["---\n{\"foo\":\"bar\"}\n---\n", (object) ['foo' => 'bar'], ''],
             ["---\n{\"foo\":\"bar\"}\n---\ntext", (object) ['foo' => 'bar'], 'text'],
         ];
+    }
+
+    private function assertDocument($data, $content, Document $document)
+    {
+        $this->assertEquals($data, $document->getData());
+        $this->assertEquals($content, $document->getContent());
     }
 }
