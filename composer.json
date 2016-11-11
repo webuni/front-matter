@@ -2,14 +2,18 @@
     "name": "webuni/front-matter",
     "type": "library",
     "description": "Front matter parser and dumper for PHP",
-    "keywords": ["yaml","front-matter"],
-    "homepage": "https://github.com/webuni/front-yaml",
+    "keywords": ["front-matter","yaml"],
+    "homepage": "https://github.com/webuni/front-matter",
     "license": "MIT",
     "authors": [
         {
             "name": "Martin Hasoň",
             "email": "martin.hason@gmail.com",
             "role": "Lead Developer"
+        },
+        {
+            "name": "Webuni s.r.o.",
+            "homepage": "https://www.webuni.cz"
         }
     ],
     "require": {
@@ -17,16 +21,20 @@
         "symfony/yaml": "^2.3|^3.0"
     },
     "require-dev": {
-        "twig/twig": "~1.20|~2.0",
+        "twig/twig": "^1.20|^2.0",
         "mthaml/mthaml": "^1.2",
-        "fabpot/php-cs-fixer": "^1.9",
-        "phpspec/phpspec": "^2.5",
-        "coduo/phpspec-data-provider-extension": "^1.0",
-        "memio/spec-gen": "~0.3"
+        "phpunit/phpunit": "^4.8|^5.0",
+        "friendsofphp/php-cs-fixer": "^1.9",
+        "sllh/php-cs-fixer-styleci-bridge": "^2.0"
     },
     "autoload": {
         "psr-4": {
             "Webuni\\FrontMatter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webuni\\FrontMatter\\Tests\\": "tests"
         }
     },
     "extra": {
