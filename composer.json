@@ -17,13 +17,13 @@
         }
     ],
     "require": {
-        "php": "^5.5|^7.0",
+        "php": "^5.6|^7.0",
         "symfony/yaml": "^2.3|^3.0"
     },
     "require-dev": {
         "twig/twig": "^1.20|^2.0",
         "mthaml/mthaml": "^1.2",
-        "phpunit/phpunit": "^4.8|^5.0",
+        "phpunit/phpunit": "^5.4",
         "friendsofphp/php-cs-fixer": "^1.9",
         "sllh/php-cs-fixer-styleci-bridge": "^2.0"
     },
