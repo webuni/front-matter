@@ -4,6 +4,7 @@
  * This is part of the webuni/front-matter package.
  *
  * (c) Martin Hasoň <martin.hason@gmail.com>
+ * (c) Webuni s.r.o. <info@webuni.cz>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,9 +17,6 @@ use MtHaml\Node\Filter;
 use MtHaml\NodeVisitor\RendererAbstract;
 use Webuni\FrontMatter\FrontMatterInterface;
 
-/**
- * @author Martin Hasoň <martin.hason@gmail.com>
- */
 class FrontMatterFilter implements FilterInterface
 {
     private $parser;
@@ -30,25 +28,16 @@ class FrontMatterFilter implements FilterInterface
         $this->filter = $filter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isOptimizable(RendererAbstract $renderer, Filter $node, $options)
     {
         return $this->filter->isOptimizable($renderer, $node, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function optimize(RendererAbstract $renderer, Filter $node, $options)
     {
         return $this->filter->optimize($renderer, $node, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filter($content, array $context, $options)
     {
         $document = $this->parser->parse($content);

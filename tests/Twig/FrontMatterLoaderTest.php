@@ -4,6 +4,7 @@
  * This is part of the webuni/front-matter package.
  *
  * (c) Martin Hasoň <martin.hason@gmail.com>
+ * (c) Webuni s.r.o. <info@webuni.cz>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -48,7 +49,6 @@ class FrontMatterLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->originalLoader->method('exists')->with($name = 'name')->willReturn(true);
         $this->assertTrue($this->loader->exists($name));
-
     }
 
     public function testGetSource()
