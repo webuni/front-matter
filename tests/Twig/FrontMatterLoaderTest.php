@@ -51,12 +51,12 @@ class FrontMatterLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->loader->exists($name));
     }
 
-    public function testGetSource()
+    public function testGetSourceContext()
     {
         $document = new Document('{{ foo }}', ['foo' => 'bar']);
         $this->originalLoader->method('getSource')->with($name = 'name')->willReturn($source = "---\nfoo: bar\n---\n{{ foo }}");
         $this->frontMatter->method('parse')->with($source, ['filename' => $name])->willReturn($document);
 
-        $this->assertEquals($document, $this->loader->getSource($name));
+        $this->assertEquals($document, $this->loader->getSourceContext($name)->getCode());
     }
 }

@@ -21,7 +21,7 @@
         "symfony/yaml": "^2.3|^3.0"
     },
     "require-dev": {
-        "twig/twig": "^1.20|^2.0",
+        "twig/twig": "^1.27|^2.0",
         "mthaml/mthaml": "^1.2",
         "phpunit/phpunit": "^5.4",
         "friendsofphp/php-cs-fixer": "^1.9",

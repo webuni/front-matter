@@ -14,7 +14,7 @@ namespace Webuni\FrontMatter\Twig;
 
 use Webuni\FrontMatter\FrontMatterInterface;
 
-class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
+class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \Twig_SourceContextLoaderInterface
 {
     private $loader;
     private $parser;
@@ -27,9 +27,9 @@ class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInte
 
     public function getSource($name)
     {
-        $source = $this->loader->getSource($name);
+        @trigger_error(sprintf('Calling "getSource" on "%s" is deprecated since Twig 1.27. Use getSourceContext() instead.', get_class($this)), E_USER_DEPRECATED);
 
-        return $this->parser->parse($source, ['filename' => $name]);
+        return $this->getSourceContext($name);
     }
 
     public function getCacheKey($name)
@@ -48,12 +48,31 @@ class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInte
             return $this->loader->exists($name);
         } else {
             try {
-                $this->loader->getSource($name);
+                if ($this->loader instanceof \Twig_SourceContextLoaderInterface) {
+                    $this->loader->getSourceContext($name);
+                } else {
+                    $this->loader->getSource($name);
+                }
 
                 return true;
             } catch (\Twig_Error_Loader $e) {
                 return false;
             }
         }
+    }
+
+    public function getSourceContext($name)
+    {
+        if ($this->loader instanceof \Twig_SourceContextLoaderInterface) {
+            $source = $this->loader->getSourceContext($name);
+        } else {
+            if ($this->loader instanceof \Twig_ExistsLoaderInterface && !$this->loader->exists($name)) {
+                throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+            }
+
+            $source = new \Twig_Source($this->loader->getSource($name), $name);
+        }
+
+        return new \Twig_Source($this->parser->parse($source->getCode(), ['filename' => $name]), $source->getName(), $source->getPath());
     }
 }
