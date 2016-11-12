@@ -16,6 +16,7 @@ use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Processor\JsonProcessor;
 use Webuni\FrontMatter\Processor\NeonProcessor;
+use Webuni\FrontMatter\Processor\TomlProcessor;
 
 class FrontMatterTest extends \PHPUnit_Framework_TestCase
 {
@@ -107,6 +108,30 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($string, $frontMatter->dump($document));
     }
 
+    /**
+     * @dataProvider getToml
+     */
+    public function testParseToml($string, $data, $content)
+    {
+        $frontMatter = new FrontMatter(new TomlProcessor());
+        $document = $frontMatter->parse($string);
+
+        $this->assertDocument($data, $content, $document);
+    }
+
+    /**
+     * @dataProvider getToml
+     */
+    public function testDumpToml($string, $data, $content)
+    {
+        $frontMatter = new FrontMatter(new TomlProcessor());
+        $document = new Document($content, $data);
+
+        $this->expectException(\BadMethodCallException::class);
+
+        $this->assertEquals($string, $frontMatter->dump($document));
+    }
+
     public function getYaml()
     {
         return [
@@ -131,6 +156,15 @@ class FrontMatterTest extends \PHPUnit_Framework_TestCase
             ['foo', [], 'foo'],
             ["---\n{\"foo\":\"bar\"}\n---\n", (object) ['foo' => 'bar'], ''],
             ["---\n{\"foo\":\"bar\"}\n---\ntext", (object) ['foo' => 'bar'], 'text'],
+        ];
+    }
+
+    public function getToml()
+    {
+        return [
+            ['foo', [], 'foo'],
+            ["---\nfoo = 'bar'\n---\n", ['foo' => 'bar'], ''],
+            ["---\nfoo = 'bar'\n---\ntext", ['foo' => 'bar'], 'text'],
         ];
     }
 
