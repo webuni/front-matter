@@ -16,16 +16,9 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlProcessor implements ProcessorInterface
 {
-    private $yaml;
-
-    public function __construct(Yaml $yaml = null)
-    {
-        $this->yaml = $yaml ?: new Yaml();
-    }
-
     public function parse($string)
     {
-        return $this->yaml->parse($string);
+        return Yaml::parse($string);
     }
 
     public function dump($data)
@@ -34,6 +27,6 @@ final class YamlProcessor implements ProcessorInterface
             return '';
         }
 
-        return $this->yaml->dump($data);
+        return Yaml::dump($data);
     }
 }

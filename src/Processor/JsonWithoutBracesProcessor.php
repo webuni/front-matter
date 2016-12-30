@@ -12,10 +12,14 @@
 
 namespace Webuni\FrontMatter\Processor;
 
-final class JsonProcessor implements ProcessorInterface
+final class JsonWithoutBracesProcessor implements ProcessorInterface
 {
     public function parse($string)
     {
+        if (false !== strpos($string, '":')) {
+            $string = '{'.$string.'}';
+        }
+
         return json_decode($string, true);
     }
 
@@ -25,6 +29,12 @@ final class JsonProcessor implements ProcessorInterface
             return '';
         }
 
-        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $result = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        if ('{' === $result[0] && '}' === substr($result, -1)) {
+            $result = substr($result, 1, -1);
+        }
+
+        return $result;
     }
 }

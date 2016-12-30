@@ -12,9 +12,6 @@
 
 namespace Webuni\FrontMatter\Processor;
 
-/**
- * @author Martin Hasoň <martin.hason@gmail.com>
- */
 interface ProcessorInterface
 {
     /**

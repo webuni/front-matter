@@ -8,7 +8,8 @@ Front Matter
 [![Code Coverage](https://scrutinizer-ci.com/g/webuni/front-matter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/7578264c-d109-49ec-ba38-fde82373e8d6.svg?style=flat-square)](https://insight.sensiolabs.com/projects/7578264c-d109-49ec-ba38-fde82373e8d6)
 
-Front matter (yaml, json) parser and dumper for PHP.
+Front matter (yaml, json, neon, toml) parser and dumper for PHP. Front matter allows page-specific variables
+to be included at the top of a page.
 
 Installation
 ------------

@@ -12,7 +12,9 @@
 
 namespace Webuni\FrontMatter;
 
+use Webuni\FrontMatter\Processor\JsonWithoutBracesProcessor;
 use Webuni\FrontMatter\Processor\ProcessorInterface;
+use Webuni\FrontMatter\Processor\TomlProcessor;
 use Webuni\FrontMatter\Processor\YamlProcessor;
 
 class FrontMatter implements FrontMatterInterface
@@ -21,6 +23,21 @@ class FrontMatter implements FrontMatterInterface
     private $endSep;
     private $processor;
     private $regexp;
+
+    public static function createYaml()
+    {
+        return new static(new YamlProcessor(), '---', '---');
+    }
+
+    public static function createToml()
+    {
+        return new static(new TomlProcessor(), '+++', '+++');
+    }
+
+    public static function createJson()
+    {
+        return new static(new JsonWithoutBracesProcessor(), '{', '}');
+    }
 
     public function __construct(ProcessorInterface $processor = null, $startSep = '---', $endSep = '---')
     {
