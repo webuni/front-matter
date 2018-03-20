@@ -14,9 +14,10 @@ namespace Webuni\FrontMatter\Tests\Twig;
 
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
+use Webuni\FrontMatter\Tests\TestCase;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
 
-class FrontMatterLoaderTest extends \PHPUnit_Framework_TestCase
+class FrontMatterLoaderTest extends TestCase
 {
     private $frontMatter;
     private $originalLoader;
@@ -54,8 +55,15 @@ class FrontMatterLoaderTest extends \PHPUnit_Framework_TestCase
     public function testGetSourceContext()
     {
         $document = new Document('{{ foo }}', ['foo' => 'bar']);
-        $this->originalLoader->method('getSource')->with($name = 'name')->willReturn($source = "---\nfoo: bar\n---\n{{ foo }}");
-        $this->frontMatter->method('parse')->with($source, ['filename' => $name])->willReturn($document);
+        $name = 'name';
+        $source = new \Twig_Source("---\nfoo: bar\n---\n{{ foo }}", $name);
+
+        $this->originalLoader
+            ->method(method_exists(\Twig_LoaderInterface::class, 'getSourceContext') ? 'getSourceContext' : 'getSource')
+            ->with($name)
+            ->willReturn(method_exists(\Twig_LoaderInterface::class, 'getSourceContext') ? $source : $source->getCode())
+        ;
+        $this->frontMatter->method('parse')->with($source->getCode(), ['filename' => $name])->willReturn($document);
 
         $this->assertEquals($document, $this->loader->getSourceContext($name)->getCode());
     }

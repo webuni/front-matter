@@ -31,7 +31,7 @@ final class JsonWithoutBracesProcessor implements ProcessorInterface
 
         $result = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        if ('{' === $result[0] && '}' === substr($result, -1)) {
+        if ('{' === substr($result, 0, 1) && '}' === substr($result, -1)) {
             $result = substr($result, 1, -1);
         }
 

@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.1.0 (2018-03-20)
+------------------
+
+ * Update dependencies
+ * Enable Symfony 4
+ * Fix Twig loader
+
 1.0.0 (2016-12-30)
 ------------------
 

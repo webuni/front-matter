@@ -12,6 +12,7 @@
 
 namespace Webuni\FrontMatter\Twig;
 
+use Twig\Loader\LoaderInterface;
 use Webuni\FrontMatter\FrontMatterInterface;
 
 class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \Twig_SourceContextLoaderInterface
@@ -44,26 +45,26 @@ class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInte
 
     public function exists($name)
     {
-        if ($this->loader instanceof \Twig_ExistsLoaderInterface) {
+        if ($this->loader instanceof LoaderInterface || $this->loader instanceof \Twig_ExistsLoaderInterface) {
             return $this->loader->exists($name);
-        } else {
-            try {
-                if ($this->loader instanceof \Twig_SourceContextLoaderInterface) {
-                    $this->loader->getSourceContext($name);
-                } else {
-                    $this->loader->getSource($name);
-                }
+        }
 
-                return true;
-            } catch (\Twig_Error_Loader $e) {
-                return false;
+        try {
+            if ($this->loader instanceof \Twig_SourceContextLoaderInterface) {
+                $this->loader->getSourceContext($name);
+            } else {
+                $this->loader->getSource($name);
             }
+
+            return true;
+        } catch (\Twig_Error_Loader $e) {
+            return false;
         }
     }
 
     public function getSourceContext($name)
     {
-        if ($this->loader instanceof \Twig_SourceContextLoaderInterface) {
+        if ($this->loader instanceof LoaderInterface || $this->loader instanceof \Twig_SourceContextLoaderInterface) {
             $source = $this->loader->getSourceContext($name);
         } else {
             if ($this->loader instanceof \Twig_ExistsLoaderInterface && !$this->loader->exists($name)) {

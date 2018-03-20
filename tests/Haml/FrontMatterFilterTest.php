@@ -18,8 +18,9 @@ use MtHaml\NodeVisitor\RendererAbstract;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Haml\FrontMatterFilter;
+use Webuni\FrontMatter\Tests\TestCase;
 
-class FrontMatterFilterTest extends \PHPUnit_Framework_TestCase
+class FrontMatterFilterTest extends TestCase
 {
     private $frontMatter;
     private $originalFilter;

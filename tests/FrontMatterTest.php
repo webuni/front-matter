@@ -19,7 +19,7 @@ use Webuni\FrontMatter\Processor\JsonWithoutBracesProcessor;
 use Webuni\FrontMatter\Processor\NeonProcessor;
 use Webuni\FrontMatter\Processor\TomlProcessor;
 
-class FrontMatterTest extends \PHPUnit_Framework_TestCase
+class FrontMatterTest extends TestCase
 {
     /**
      * @dataProvider getYaml
