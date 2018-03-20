@@ -45,11 +45,16 @@ class FrontMatterLoaderTest extends TestCase
 
     public function testExists()
     {
-        $this->originalLoader = $this->createMock([\Twig_LoaderInterface::class, \Twig_ExistsLoaderInterface::class]);
-        $this->loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
+        if (is_subclass_of(\Twig_ExistsLoaderInterface::class, \Twig_LoaderInterface::class)) {
+            $originalLoader = $this->createMock([\Twig_LoaderInterface::class]);
+        } else {
+            $originalLoader = $this->createMock([\Twig_LoaderInterface::class, \Twig_ExistsLoaderInterface::class]);
+        }
 
-        $this->originalLoader->method('exists')->with($name = 'name')->willReturn(true);
-        $this->assertTrue($this->loader->exists($name));
+        $loader = new FrontMatterLoader($this->frontMatter, $originalLoader);
+
+        $originalLoader->method('exists')->with($name = 'name')->willReturn(true);
+        $this->assertTrue($loader->exists($name));
     }
 
     public function testGetSourceContext()
