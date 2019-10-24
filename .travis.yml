@@ -10,6 +10,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
 
 before_script:
   - if [ $TRAVIS_PHP_VERSION = '7.2' ]; then PHPUNIT_COVERAGE="--coverage-clover=coverage.clover"; fi
