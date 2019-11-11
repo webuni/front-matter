@@ -14,8 +14,8 @@ namespace Webuni\FrontMatter\Tests\Twig;
 
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
-use Webuni\FrontMatter\Tests\TestCase;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
+use PHPUnit\Framework\TestCase;
 
 class FrontMatterLoaderTest extends TestCase
 {

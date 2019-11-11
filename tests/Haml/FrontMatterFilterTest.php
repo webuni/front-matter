@@ -18,7 +18,7 @@ use MtHaml\NodeVisitor\RendererAbstract;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Haml\FrontMatterFilter;
-use Webuni\FrontMatter\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class FrontMatterFilterTest extends TestCase
 {

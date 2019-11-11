@@ -18,6 +18,7 @@ use Webuni\FrontMatter\Processor\JsonProcessor;
 use Webuni\FrontMatter\Processor\JsonWithoutBracesProcessor;
 use Webuni\FrontMatter\Processor\NeonProcessor;
 use Webuni\FrontMatter\Processor\TomlProcessor;
+use PHPUnit\Framework\TestCase;
 
 class FrontMatterTest extends TestCase
 {
@@ -92,6 +93,7 @@ class FrontMatterTest extends TestCase
         $this->assertDocument($data, $content, $document);
 
         $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('Dump for Toml is not implemented.');
 
         $this->assertEquals($string, $frontMatter->dump($document));
     }
