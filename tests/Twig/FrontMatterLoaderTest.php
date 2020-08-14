@@ -20,7 +20,6 @@ use Twig\Source;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
-use PHPUnit\Framework\TestCase;
 
 class FrontMatterLoaderTest extends TestCase
 {

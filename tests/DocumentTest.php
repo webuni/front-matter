@@ -14,7 +14,6 @@ namespace Webuni\FrontMatter\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
-use PHPUnit\Framework\TestCase;
 
 class DocumentTest extends TestCase
 {

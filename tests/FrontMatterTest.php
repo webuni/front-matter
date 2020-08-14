@@ -19,7 +19,6 @@ use Webuni\FrontMatter\Processor\JsonProcessor;
 use Webuni\FrontMatter\Processor\JsonWithoutBracesProcessor;
 use Webuni\FrontMatter\Processor\NeonProcessor;
 use Webuni\FrontMatter\Processor\TomlProcessor;
-use PHPUnit\Framework\TestCase;
 
 class FrontMatterTest extends TestCase
 {
