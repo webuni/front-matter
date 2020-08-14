@@ -11,14 +11,14 @@ file that was distributed with this source code.
 EOF;
 
 return PhpCsFixer\Config::create()
-    ->setRules(array(
+    ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
         'header_comment' => [
             'header' => $header,
         ],
         'ordered_imports' => true,
-    ))
+    ])
     ->setLineEnding("\n")
     ->setUsingCache(false)
     ->setFinder(PhpCsFixer\Finder::create()->in([__DIR__.'/src', __DIR__.'/tests']))

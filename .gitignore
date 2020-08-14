@@ -1,3 +1,4 @@
-/composer.lock
-/vendor/
+vendor/
+.runner
+composer.lock
 phpspec.yml

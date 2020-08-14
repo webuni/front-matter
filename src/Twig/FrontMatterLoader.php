@@ -13,67 +13,39 @@
 namespace Webuni\FrontMatter\Twig;
 
 use Twig\Loader\LoaderInterface;
+use Twig\Source;
 use Webuni\FrontMatter\FrontMatterInterface;
 
-class FrontMatterLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \Twig_SourceContextLoaderInterface
+class FrontMatterLoader implements LoaderInterface
 {
     private $loader;
     private $parser;
 
-    public function __construct(FrontMatterInterface $parser, \Twig_LoaderInterface $loader)
+    public function __construct(FrontMatterInterface $parser, LoaderInterface $loader)
     {
         $this->loader = $loader;
         $this->parser = $parser;
     }
 
-    public function getSource($name)
-    {
-        @trigger_error(sprintf('Calling "getSource" on "%s" is deprecated since Twig 1.27. Use getSourceContext() instead.', get_class($this)), E_USER_DEPRECATED);
-
-        return $this->getSourceContext($name);
-    }
-
-    public function getCacheKey($name)
+    public function getCacheKey($name): string
     {
         return $this->loader->getCacheKey($name);
     }
 
-    public function isFresh($name, $time)
+    public function isFresh($name, $time): bool
     {
         return $this->loader->isFresh($name, $time);
     }
 
     public function exists($name)
     {
-        if ($this->loader instanceof LoaderInterface || $this->loader instanceof \Twig_ExistsLoaderInterface) {
-            return $this->loader->exists($name);
-        }
-
-        try {
-            if ($this->loader instanceof \Twig_SourceContextLoaderInterface) {
-                $this->loader->getSourceContext($name);
-            } else {
-                $this->loader->getSource($name);
-            }
-
-            return true;
-        } catch (\Twig_Error_Loader $e) {
-            return false;
-        }
+        return $this->loader->exists($name);
     }
 
-    public function getSourceContext($name)
+    public function getSourceContext($name): Source
     {
-        if ($this->loader instanceof LoaderInterface || $this->loader instanceof \Twig_SourceContextLoaderInterface) {
-            $source = $this->loader->getSourceContext($name);
-        } else {
-            if ($this->loader instanceof \Twig_ExistsLoaderInterface && !$this->loader->exists($name)) {
-                throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
-            }
+        $source = $this->loader->getSourceContext($name);
 
-            $source = new \Twig_Source($this->loader->getSource($name), $name);
-        }
-
-        return new \Twig_Source($this->parser->parse($source->getCode(), ['filename' => $name]), $source->getName(), $source->getPath());
+        return new Source($this->parser->parse($source->getCode(), ['filename' => $name]), $source->getName(), $source->getPath());
     }
 }

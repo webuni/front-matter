@@ -12,6 +12,7 @@
 
 namespace Webuni\FrontMatter\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Processor\JsonProcessor;

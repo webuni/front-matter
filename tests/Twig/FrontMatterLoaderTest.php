@@ -12,6 +12,11 @@
 
 namespace Webuni\FrontMatter\Tests\Twig;
 
+use PHPUnit\Framework\TestCase;
+use Twig\Loader\ExistsLoaderInterface;
+use Twig\Loader\LoaderInterface;
+use Twig\Loader\SourceContextLoaderInterface;
+use Twig\Source;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
@@ -23,10 +28,10 @@ class FrontMatterLoaderTest extends TestCase
     private $originalLoader;
     private $loader;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->frontMatter = $this->createMock(FrontMatterInterface::class);
-        $this->originalLoader = $this->createMock(\Twig_LoaderInterface::class);
+        $this->originalLoader = $this->createMock(LoaderInterface::class);
 
         $this->loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
     }
@@ -45,15 +50,9 @@ class FrontMatterLoaderTest extends TestCase
 
     public function testExists()
     {
-        if (is_subclass_of(\Twig_ExistsLoaderInterface::class, \Twig_LoaderInterface::class)) {
-            $originalLoader = $this->createMock([\Twig_LoaderInterface::class]);
-        } else {
-            $originalLoader = $this->createMock([\Twig_LoaderInterface::class, \Twig_ExistsLoaderInterface::class]);
-        }
+        $loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
 
-        $loader = new FrontMatterLoader($this->frontMatter, $originalLoader);
-
-        $originalLoader->method('exists')->with($name = 'name')->willReturn(true);
+        $this->originalLoader->method('exists')->with($name = 'name')->willReturn(true);
         $this->assertTrue($loader->exists($name));
     }
 
@@ -61,12 +60,12 @@ class FrontMatterLoaderTest extends TestCase
     {
         $document = new Document('{{ foo }}', ['foo' => 'bar']);
         $name = 'name';
-        $source = new \Twig_Source("---\nfoo: bar\n---\n{{ foo }}", $name);
+        $source = new Source("---\nfoo: bar\n---\n{{ foo }}", $name);
 
         $this->originalLoader
-            ->method(method_exists(\Twig_LoaderInterface::class, 'getSourceContext') ? 'getSourceContext' : 'getSource')
+            ->method('getSourceContext')
             ->with($name)
-            ->willReturn(method_exists(\Twig_LoaderInterface::class, 'getSourceContext') ? $source : $source->getCode())
+            ->willReturn($source)
         ;
         $this->frontMatter->method('parse')->with($source->getCode(), ['filename' => $name])->willReturn($document);
 
