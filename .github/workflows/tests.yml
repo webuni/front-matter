@@ -10,16 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        deps: [ update, lowest ]
+        deps_strategy: [ update, lowest ]
         php: [ 7.2, 7.3, 7.4 ]
     steps:
       - name: Update code
         uses: actions/checkout@v2
       - name: Install dependencies
         env:
-          PHP_VERSION: ${matrix.php}
-        run: ./run deps:${matrix.deps}
+          PHP_VERSION: ${{ matrix.php }}
+          DEPS_STRATEGY: ${{ matrix.deps_strategy }}
+        run: ./run deps:$DEPS_STRATEGY
       - name: Run tests
         env:
-          PHP_VERSION: ${matrix.php}
+          PHP_VERSION: ${{ matrix.php }}
         run: ./run tests
