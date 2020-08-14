@@ -2,7 +2,7 @@ Front Matter
 ============
 
 [![Packagist](https://img.shields.io/packagist/v/webuni/front-matter.svg?style=flat-square)](https://packagist.org/packages/webuni/front-matter)
-[![Build Status](https://img.shields.io/github/workflow/status/webuni/front-matter/Tests/latest.svg?style=flat-square)](https://github.com/webuni/front-matter/actions?query=workflow%3ATests+branch%3Alatest)
+[![Build Status](https://img.shields.io/github/workflow/status/webuni/front-matter/Tests/master.svg?style=flat-square)](https://github.com/webuni/front-matter/actions?query=workflow%3ATests+branch%3Amaster)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webuni/front-matter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webuni/front-matter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
 
@@ -22,7 +22,7 @@ Usage
 ```php
 $frontMatter = new Webuni\FrontMatter\FrontMatter();
 
-$document = $frontMatter->parse($str)
+$document = $frontMatter->parse($str);
 
 $data = $document->getData();
 $content = $document->getContent();
@@ -31,6 +31,7 @@ $content = $document->getContent();
 Alternatives
 ------------
 
+- https://github.com/spatie/yaml-front-matter
 - https://github.com/mnapoli/FrontYAML
 - https://github.com/Modularr/YAML-FrontMatter
 - https://github.com/vkbansal/FrontMatter

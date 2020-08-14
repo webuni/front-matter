@@ -6,7 +6,7 @@ on:
 
 jobs:
   phpunit:
-    name: PHPUnit on ${{ matrix.php }}
+    name: "PHPUnit on ${{ matrix.php }} (dependencies: ${{ matrix.deps_strategy }})"
     runs-on: ubuntu-latest
     strategy:
       matrix:
