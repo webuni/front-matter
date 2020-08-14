@@ -1,0 +1,16 @@
+version: '3.4'
+
+x-base: &x-base
+  volumes:
+  - .:$PWD
+  working_dir: $PWD
+  command: sshd
+
+services:
+  php:
+    <<: *x-base
+    image: "minidocks/php:${PHP_VERSION:-7.4}"
+
+  php-tools:
+    <<: *x-base
+    image: "minidocks/php-tools:${PHP_VERSION:-7.4}"

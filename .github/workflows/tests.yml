@@ -1,0 +1,25 @@
+name: Tests
+
+on:
+  push: ~
+  pull_request: ~
+
+jobs:
+  phpunit:
+    name: PHPUnit on ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deps: [ update, lowest ]
+        php: [ 7.2, 7.3, 7.4 ]
+    steps:
+      - name: Update code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        env:
+          PHP_VERSION: ${matrix.php}
+        run: ./run deps:${matrix.deps}
+      - name: Run tests
+        env:
+          PHP_VERSION: ${matrix.php}
+        run: ./run tests
