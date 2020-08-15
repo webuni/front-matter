@@ -6,11 +6,11 @@ on:
 
 jobs:
   phpunit:
-    name: "PHPUnit on ${{ matrix.php }} (dependencies: ${{ matrix.deps_strategy }})"
+    name: PHPUnit on ${{ matrix.php }} (${{ matrix.deps_strategy }} dependencies)
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        deps_strategy: [ update, lowest ]
+        deps_strategy: [ latest, lowest ]
         php: [ 7.2, 7.3, 7.4 ]
     steps:
       - name: Update code

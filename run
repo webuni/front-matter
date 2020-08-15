@@ -9,17 +9,12 @@ _decorator()(
     _decorator_docker_compose_run "$@"
 )
 
-# Install all dependencies
-task_deps()(
-    _run composer install
-)
-
-# Update all dependencies
-task_deps__update()(
+# Update dependencies to the latest versions
+task_deps__latest()(
     _run composer update
 )
 
-# Update all dependencies to the lowest versions
+# Update dependencies to the lowest versions
 task_deps__lowest()(
     _run composer update --prefer-lowest
 )
