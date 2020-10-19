@@ -6,12 +6,6 @@ jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
-      - run: "which -a php"
-      - run: "php -v"
-      - run: "ls -l /usr/bin/php* || true"
-      - run: "which -a composer"
-      - run: "composer --version"
-      - run: "echo $HOME"
-      - run: "ls -la $HOME"
-      - run: "echo $PATH"
-
+      - run: "echo 'biny' >> /usr/local/bin/phive"
+      - run: "stat /usr/local/bin/phive"
+        
