@@ -12,6 +12,6 @@ jobs:
       - run: "which -a composer"
       - run: "composer --version"
       - run: "echo $HOME"
-      - run: "ls -ls $HOME"
+      - run: "ls -la $HOME"
       - run: "echo $PATH"
 
