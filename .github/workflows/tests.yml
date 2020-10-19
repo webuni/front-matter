@@ -6,6 +6,6 @@ jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
-      - run: "echo 'biny' >> /usr/local/bin/phive"
+      - run: "sudo echo 'biny' >> /usr/local/bin/phive"
       - run: "stat /usr/local/bin/phive"
         
