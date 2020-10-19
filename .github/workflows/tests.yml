@@ -6,6 +6,12 @@ jobs:
 
   phpcsfixer:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+        dependencies:
+          - "highest"
     steps:
       - name: "Set default PHP version"
         run: "sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}"

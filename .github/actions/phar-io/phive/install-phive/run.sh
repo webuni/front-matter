@@ -38,11 +38,11 @@ if [ ! -r "${PHIVE_DOT_PATH}/phive.phar" ]; then
 
     if php -r 'exit(version_compare(PHP_VERSION, "7.2.0", "<") ? 0 : 1);'; then
         # Last phive version supporting PHP 7.1: v0.13.3
-        retry wget --tries=1 --output="${PHIVE_DOT_PATH}/phive.phar" "https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar"
+        retry wget --tries=1 --output-document="${PHIVE_DOT_PATH}/phive.phar" "https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar"
         retry wget --tries=1 --output="${PHIVE_DOT_PATH}/phive.phar.asc" "https://github.com/phar-io/phive/releases/download/0.13.3/phive-0.13.3.phar.asc"
     else
-        retry wget --tries=1 --output="${PHIVE_DOT_PATH}/phive.phar" "https://phar.io/releases/phive.phar"
-        retry wget --tries=1 --output="${PHIVE_DOT_PATH}/phive.phar.asc" "https://phar.io/releases/phive.phar.asc"
+        retry wget --tries=1 --output-document="${PHIVE_DOT_PATH}/phive.phar" "https://phar.io/releases/phive.phar"
+        retry wget --tries=1 --output-document="${PHIVE_DOT_PATH}/phive.phar.asc" "https://phar.io/releases/phive.phar.asc"
     fi
     retry gpg --batch --keyserver ha.pool.sks-keyservers.net --keyserver-options timeout=30 --recv-keys "${PHIVE_SIGNING_KEY}"
     if ! gpg --batch --verify "${PHIVE_DOT_PATH}/phive.phar.asc" "${PHIVE_DOT_PATH}/phive.phar"; then
