@@ -13,4 +13,4 @@ runs:
   steps:
     - name: "Install PHP tools"
       shell: "bash"
-      run: "'${{ github.workspace }}/tools/phive' install --trust-gpg-keys ${{ inputs.trustGpgKeys }}"
+      run: "'${{ github.workspace }}/tools/phive' --no-progress install --trust-gpg-keys ${{ inputs.trustGpgKeys }}"

@@ -10,13 +10,17 @@ jobs:
       matrix:
         php-version:
           - "7.4"
-        dependencies:
-          - "highest"
     steps:
       - name: "Set default PHP version"
         run: "sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}"
       - name: "Checkout code"
         uses: "actions/checkout@v2"
+      - name: "Cache tools installed with PHIVE"
+        uses: "actions/cache@v2.1.2"
+        with:
+          path: "$HOME/.phive"
+          key: "php-${{ matrix.php-version }}-phive-${{ hashFiles('.phive/phars.xml') }}"
+          restore-keys: "php-${{ matrix.php-version }}-phive-"
       - name: "Install PHIVE"
         uses: "./.github/actions/phar-io/phive/install-phive"
       - name: "Install PHP tools"
@@ -42,6 +46,12 @@ jobs:
         run: "sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}"
       - name: "Checkout code"
         uses: "actions/checkout@v2"
+      - name: "Cache tools installed with PHIVE"
+        uses: "actions/cache@v2.1.2"
+        with:
+          path: "$HOME/.phive"
+          key: "php-${{ matrix.php-version }}-phive-${{ hashFiles('.phive/phars.xml') }}"
+          restore-keys: "php-${{ matrix.php-version }}-phive-"
       - name: "Install PHIVE"
         uses: "./.github/actions/phar-io/phive/install-phive"
       - name: "Install PHP tools"
@@ -50,8 +60,8 @@ jobs:
           trustGpgKeys: "4AA394086372C20A,CF1A108D0E7AE720,E82B2FB314E9906E"
       - name: "Determine Composer cache directory"
         uses: "./.github/actions/composer/composer/determine-cache-directory"
-      - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v2.1.1"
+      - name: "Cache dependencies installed with Composer"
+        uses: "actions/cache@v2.1.2"
         with:
           path: "${{ env.COMPOSER_CACHE_DIR }}"
           key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.json') }}"
@@ -76,6 +86,12 @@ jobs:
         run: "sudo update-alternatives --set php /usr/bin/php${{ matrix.php-version }}"
       - name: "Checkout code"
         uses: "actions/checkout@v2"
+      - name: "Cache tools installed with PHIVE"
+        uses: "actions/cache@v2.1.2"
+        with:
+          path: "$HOME/.phive"
+          key: "php-${{ matrix.php-version }}-phive-${{ hashFiles('.phive/phars.xml') }}"
+          restore-keys: "php-${{ matrix.php-version }}-phive-"
       - name: "Install PHIVE"
         uses: "./.github/actions/phar-io/phive/install-phive"
       - name: "Install PHP tools"
@@ -84,8 +100,8 @@ jobs:
           trustGpgKeys: "4AA394086372C20A,CF1A108D0E7AE720,E82B2FB314E9906E"
       - name: "Determine Composer cache directory"
         uses: "./.github/actions/composer/composer/determine-cache-directory"
-      - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v2.1.1"
+      - name: "Cache dependencies installed with Composer"
+        uses: "actions/cache@v2.1.2"
         with:
           path: "${{ env.COMPOSER_CACHE_DIR }}"
           key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.json') }}"
