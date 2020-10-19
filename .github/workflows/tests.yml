@@ -1,26 +1,16 @@
 name: Tests
 
-on:
-  push: ~
-  pull_request: ~
+on: [ push, pull_request ]
 
 jobs:
-  phpunit:
-    name: PHPUnit on ${{ matrix.php }} (${{ matrix.deps_strategy }} dependencies)
+  debug:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        deps_strategy: [ latest, lowest ]
-        php: [ 7.2, 7.3, 7.4 ]
     steps:
-      - name: Update code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-          DEPS_STRATEGY: ${{ matrix.deps_strategy }}
-        run: ./run deps:$DEPS_STRATEGY
-      - name: Run tests
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-        run: ./run tests
+      - run: "which -a php"
+      - run: "php -v"
+      - run: "ls -l /usr/bin/php* || true"
+      - run: "which -a composer"
+      - run: "composer --version"
+      - run: "echo $HOME"
+      - run: "ls -ls $HOME"
+      - run: "echo $PATH"
