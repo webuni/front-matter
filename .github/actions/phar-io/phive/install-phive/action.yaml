@@ -2,6 +2,20 @@ name: "Install PHIVE"
 
 description: "The Phar Installation and Verification Environment"
 
+inputs:
+  home:
+    description: "Home path of PHIVE"
+    required: false
+    default: "$HOME/.phive"
+  binPath:
+    description: "Path of the PHIVE binary"
+    required: false
+    default: "${{ github.workspace }}/tools/phive"
+  signingKey:
+    description: "PHIVE release GPG key hash"
+    required: false
+    default: "0x9D8A98B29B2D5D79"
+
 runs:
   using: "composite"
 
@@ -10,7 +24,7 @@ runs:
       shell: "bash"
       run: "${{ github.action_path }}/run.sh"
       env:
-        PHIVE_DOT_PATH: "$HOME/.phive"
+        PHIVE_DOT_PATH: "${{ inputs.home }}"
         PHIVE_TRUSTED_GPG_KEYS: "${{ inputs.trustGpgKeys }}"
-        PHIVE_BIN_PATH: "${{ github.workspace }}/tools/phive"
-        PHIVE_SIGNING_KEY: "0x9D8A98B29B2D5D79"
+        PHIVE_BIN_PATH: "${{ inputs.binPath }}"
+        PHIVE_SIGNING_KEY: "${{ inputs.signingKey }}"
