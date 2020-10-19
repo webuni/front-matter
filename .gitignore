@@ -1,4 +1,4 @@
-vendor/
-.runner
-composer.lock
-phpspec.yml
+/composer.lock
+/vendor/
+/tools/
+.phpunit.result.cache

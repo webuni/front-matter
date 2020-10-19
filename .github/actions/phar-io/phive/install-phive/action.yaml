@@ -1,0 +1,16 @@
+name: "Install PHIVE"
+
+description: "The Phar Installation and Verification Environment"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: "Install PHIVE"
+      shell: "bash"
+      run: "${{ github.action_path }}/run.sh"
+      env:
+        PHIVE_DOT_PATH: "$HOME/.phive"
+        PHIVE_TRUSTED_GPG_KEYS: "${{ inputs.trustGpgKeys }}"
+        PHIVE_BIN_PATH: "${{ github.workspace }}/tools/phive"
+        PHIVE_SIGNING_KEY: "0x9D8A98B29B2D5D79"
