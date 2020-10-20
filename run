@@ -17,7 +17,7 @@ task_deps__latest()( _run composer update )
 task_deps__lowest()( _run composer update --prefer-lowest )
 
 # Run composer
-# @service php
+# @service php-tools
 task_composer()( composer "$@" )
 
 # Run tests
