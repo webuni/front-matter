@@ -17,7 +17,7 @@ use Webuni\FrontMatter\Processor\ProcessorInterface;
 use Webuni\FrontMatter\Processor\TomlProcessor;
 use Webuni\FrontMatter\Processor\YamlProcessor;
 
-final class FrontMatter implements FrontMatterInterface
+final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterface
 {
     /** @var string */
     private $startSep;
@@ -80,5 +80,13 @@ final class FrontMatter implements FrontMatterInterface
         }
 
         return sprintf("%s\n%s\n%s\n%s", $this->startSep, $data, $this->endSep, $document->getContent());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exists(string $source): bool
+    {
+        return preg_match($this->regexp, $source) === 1;
     }
 }
