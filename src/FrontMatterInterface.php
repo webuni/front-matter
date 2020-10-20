@@ -34,4 +34,13 @@ interface FrontMatterInterface
      * @return string
      */
     public function dump(Document $document): string;
+
+    /**
+     * Returns true when source has front matter defined that can be parsed by the specific implementation.
+     *
+     * @param string $source The source
+     *
+     * @return bool
+     */
+    public function hasFrontMatter(string $source): bool;
 }

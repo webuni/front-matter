@@ -81,4 +81,9 @@ final class FrontMatter implements FrontMatterInterface
 
         return sprintf("%s\n%s\n%s\n%s", $this->startSep, $data, $this->endSep, $document->getContent());
     }
+
+    public function hasFrontMatter(string $source): bool
+    {
+        return preg_match($this->regexp, $source) === 1;
+    }
 }

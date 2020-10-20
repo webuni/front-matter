@@ -19,13 +19,29 @@ This project can be installed via Composer:
 Usage
 -----
 
+Parse an arbitrary `string`
+===========================
+
 ```php
+<?php
+
 $frontMatter = new Webuni\FrontMatter\FrontMatter();
 
 $document = $frontMatter->parse($str);
 
 $data = $document->getData();
 $content = $document->getContent();
+```
+
+Test if a `string` has front matter
+====================================================
+
+```php
+<?php
+
+$frontMatter = new Webuni\FrontMatter\FrontMatter();
+
+$hasFrontMatter = $frontMatter->hasFrontMatter($str);
 ```
 
 Alternatives
