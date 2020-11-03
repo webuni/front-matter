@@ -16,12 +16,12 @@ use Nette\Neon\Neon;
 
 final class NeonProcessor implements ProcessorInterface
 {
-    public function parse($string)
+    public function parse(string $string): array
     {
-        return Neon::decode($string);
+        return (array) Neon::decode($string);
     }
 
-    public function dump($data)
+    public function dump(array $data): string
     {
         if (empty($data)) {
             return '';

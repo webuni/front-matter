@@ -35,19 +35,19 @@ class FrontMatterLoaderTest extends TestCase
         $this->loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
     }
 
-    public function testGetCacheKey()
+    public function testGetCacheKey(): void
     {
         $this->originalLoader->method('getCacheKey')->with($name = 'name')->willReturn($name);
         $this->assertEquals($name, $this->loader->getCacheKey($name));
     }
 
-    public function testIsFresh()
+    public function testIsFresh(): void
     {
         $this->originalLoader->method('isFresh')->with($name = 'name', $time = time())->willReturn(true);
         $this->assertTrue($this->loader->isFresh($name, $time));
     }
 
-    public function testExists()
+    public function testExists(): void
     {
         $loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
 
@@ -55,7 +55,7 @@ class FrontMatterLoaderTest extends TestCase
         $this->assertTrue($loader->exists($name));
     }
 
-    public function testGetSourceContext()
+    public function testGetSourceContext(): void
     {
         $document = new Document('{{ foo }}', ['foo' => 'bar']);
         $name = 'name';
@@ -66,7 +66,7 @@ class FrontMatterLoaderTest extends TestCase
             ->with($name)
             ->willReturn($source)
         ;
-        $this->frontMatter->method('parse')->with($source->getCode(), ['filename' => $name])->willReturn($document);
+        $this->frontMatter->method('parse')->with($source->getCode())->willReturn($document);
 
         $this->assertEquals($document, $this->loader->getSourceContext($name)->getCode());
     }

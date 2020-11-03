@@ -19,16 +19,16 @@ interface ProcessorInterface
      *
      * @param string $string The string
      *
-     * @return mixed
+     * @return array
      */
-    public function parse($string);
+    public function parse(string $string): array;
 
     /**
      * Dumps a data to a string.
      *
-     * @param mixed $data The data
+     * @param array $data The data
      *
      * @return string
      */
-    public function dump($data);
+    public function dump(array $data): string;
 }

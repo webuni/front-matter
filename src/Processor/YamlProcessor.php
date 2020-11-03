@@ -16,14 +16,14 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlProcessor implements ProcessorInterface
 {
-    public function parse($string)
+    public function parse(string $string): array
     {
-        return Yaml::parse($string);
+        return (array) Yaml::parse($string);
     }
 
-    public function dump($data)
+    public function dump(array $data): string
     {
-        if (is_array($data) && empty($data)) {
+        if (empty($data)) {
             return '';
         }
 

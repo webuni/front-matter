@@ -15,11 +15,15 @@ namespace Webuni\FrontMatter\Haml;
 use MtHaml\Filter\FilterInterface;
 use MtHaml\Node\Filter;
 use MtHaml\NodeVisitor\RendererAbstract;
+use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 
 class FrontMatterFilter implements FilterInterface
 {
+    /** @var FrontMatterInterface */
     private $parser;
+
+    /** @var FilterInterface */
     private $filter;
 
     public function __construct(FrontMatterInterface $parser, FilterInterface $filter)
@@ -28,17 +32,17 @@ class FrontMatterFilter implements FilterInterface
         $this->filter = $filter;
     }
 
-    public function isOptimizable(RendererAbstract $renderer, Filter $node, $options)
+    public function isOptimizable(RendererAbstract $renderer, Filter $node, $options): bool
     {
         return $this->filter->isOptimizable($renderer, $node, $options);
     }
 
-    public function optimize(RendererAbstract $renderer, Filter $node, $options)
+    public function optimize(RendererAbstract $renderer, Filter $node, $options): string
     {
         return $this->filter->optimize($renderer, $node, $options);
     }
 
-    public function filter($content, array $context, $options)
+    public function filter($content, array $context, $options): Document
     {
         $document = $this->parser->parse($content);
         $document->setContent($this->filter->filter($document, $context, $options));

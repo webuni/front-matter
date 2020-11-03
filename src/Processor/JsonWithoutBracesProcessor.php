@@ -14,22 +14,22 @@ namespace Webuni\FrontMatter\Processor;
 
 final class JsonWithoutBracesProcessor implements ProcessorInterface
 {
-    public function parse($string)
+    public function parse(string $string): array
     {
         if (false !== strpos($string, '":')) {
             $string = '{'.$string.'}';
         }
 
-        return json_decode($string, true);
+        return (array) json_decode($string, true);
     }
 
-    public function dump($data)
+    public function dump(array $data): string
     {
-        if (is_array($data) && empty($data)) {
+        if (empty($data)) {
             return '';
         }
 
-        $result = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $result = (string) json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         if ('{' === substr($result, 0, 1) && '}' === substr($result, -1)) {
             $result = substr($result, 1, -1);

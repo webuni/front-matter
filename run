@@ -5,29 +5,24 @@ url="https://raw.githubusercontent.com/webuni/shell-task-runner/master/runner"
 [ -f ./.runner ] || wget -q "$url" -O- > .runner || curl -fso .runner "$url"
 . ./.runner
 
-_decorator()(
-    _decorator_docker_compose_run "$@"
-)
+! mkdir -p ~/.composer/cache
+if [ ! -f ~/.composer/auth.json ]; then echo "{}" > ~/.composer/auth.json; fi
+
+_decorator()( _decorator_docker_compose_run "$@" )
 
 # Update dependencies to the latest versions
-task_deps__latest()(
-    _run composer update
-)
+task_deps__latest()( _run composer update )
 
 # Update dependencies to the lowest versions
-task_deps__lowest()(
-    _run composer update --prefer-lowest
-)
+task_deps__lowest()( _run composer update --prefer-lowest )
 
 # Run composer
 # @service php
-task_composer()(
-    composer "$@"
-)
+task_composer()( composer "$@" )
 
 # Run tests
 # @service php-tools
-task_tests()( phpunit-8 --colors=always "$@" )
+task_tests()( "$(__fn phpunit-8 && echo "phpunit-8" || echo "phpunit")" --colors=always "$@" )
 
 # Fix code style
 # @service php-tools
@@ -35,15 +30,11 @@ task_cs()( php-cs-fixer fix --ansi --allow-risky=yes "$@" )
 
 # Analyse code
 # @service php-tools
-task_analyse()( phpstan analyse -l 7 -c phpstan.neon --no-progress --ansi src "$@" )
+task_analyse()( phpstan analyse --no-progress --ansi; psalm )
 
 # Remove all containers in project (use -v to remove volumes also)
-task_clean()(
-    _docker_compose down --remove-orphans  "$@"
-)
+task_clean()( _docker_compose down --remove-orphans "$@" )
 
 # Run shell with tools
 # @service php-tools
-task_tools()(
-  sh "$@"
-)
+task_tools()( sh "$@" )

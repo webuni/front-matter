@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        -
+            message: "#has parameter \\$[a-z]+ with no typehint specified\\.$#"
+            path: src/Haml/FrontMatterFilter.php

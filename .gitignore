@@ -1,4 +1,7 @@
-vendor/
+.phpunit.result.cache
 .runner
 composer.lock
-phpspec.yml
+phpstan.neon
+phpunit.xml
+psalm.xml
+vendor/

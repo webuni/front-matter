@@ -20,11 +20,11 @@ interface FrontMatterInterface
     /**
      * Parse source.
      *
-     * @param string|mixed $source The source
+     * @param string $source The source
      *
      * @return Document
      */
-    public function parse($source);
+    public function parse(string $source): Document;
 
     /**
      * Dump document.
@@ -33,5 +33,5 @@ interface FrontMatterInterface
      *
      * @return string
      */
-    public function dump(Document $document);
+    public function dump(Document $document): string;
 }

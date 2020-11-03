@@ -3,6 +3,8 @@ version: '3.4'
 x-base: &x-base
   volumes:
   - .:$PWD
+  - ~/.composer/cache:/composer-cache
+  - ~/.composer/auth.json:/composer/auth.json
   working_dir: $PWD
   command: sshd
 
