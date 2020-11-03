@@ -1,12 +1,12 @@
-name: Tests
+name: Code
 
 on:
   push: ~
   pull_request: ~
 
 jobs:
-  phpunit:
-    name: PHPUnit on ${{ matrix.php }} (${{ matrix.deps_strategy }} dependencies)
+  code:
+    name: Code analyse on ${{ matrix.php }} (${{ matrix.deps_strategy }} dependencies)
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,7 +20,11 @@ jobs:
           PHP_VERSION: ${{ matrix.php }}
           DEPS_STRATEGY: ${{ matrix.deps_strategy }}
         run: ./run deps:$DEPS_STRATEGY
-      - name: Tests
+      - name: Code style
         env:
           PHP_VERSION: ${{ matrix.php }}
-        run: ./run tests
+        run: ./run cs --dry-run
+      - name: Code quality
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+        run: ./run analyse
