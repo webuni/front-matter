@@ -61,6 +61,7 @@ final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterf
     public function parse(string $source): Document
     {
         if (preg_match($this->regexp, $source, $matches) === 1) {
+            /** @var array<string, mixed> $data */
             $data = '' !== trim($matches[1]) ? $this->processor->parse(trim($matches[1])) : [];
 
             return new Document($matches[2], $data);

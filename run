@@ -30,7 +30,7 @@ task_cs()( php-cs-fixer fix --ansi --allow-risky=yes "$@" )
 
 # Analyse code
 # @service php-tools
-task_analyse()( phpstan analyse --no-progress --ansi; psalm )
+task_analyse()( phpstan analyse --no-progress --ansi; __fn psalm && psalm || echo '' )
 
 # Remove all containers in project (use -v to remove volumes also)
 task_clean()( _docker_compose down --remove-orphans "$@" )

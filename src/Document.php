@@ -17,9 +17,13 @@ class Document
     /** @var string */
     private $content;
 
-    /** @var array */
+    /** @var array<string, mixed> */
     private $data;
 
+    /**
+     * @param string $content
+     * @param array<string, mixed> $data
+     */
     public function __construct(string $content = '', array $data = [])
     {
         $this->content = $content;
@@ -31,6 +35,9 @@ class Document
         return $this->content;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;
@@ -48,6 +55,10 @@ class Document
         return $this;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return $this
+     */
     public function setData(array $data): self
     {
         $this->data = $data;
