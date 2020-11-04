@@ -32,16 +32,27 @@ class FrontMatterFilter implements FilterInterface
         $this->filter = $filter;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function isOptimizable(RendererAbstract $renderer, Filter $node, $options): bool
     {
         return $this->filter->isOptimizable($renderer, $node, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function optimize(RendererAbstract $renderer, Filter $node, $options): string
     {
         return $this->filter->optimize($renderer, $node, $options);
     }
 
+    /**
+     * @param string $content
+     * @param array<mixed, mixed> $context
+     * @param array<string, mixed> $options
+     */
     public function filter($content, array $context, $options): Document
     {
         $document = $this->parser->parse($content);
