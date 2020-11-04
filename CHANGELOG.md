@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+1.2.0 (2020-11-04)
+------------------
+
+ * Add CommonMark extension
+ * Add FrontMatterExistsInterface
+ * Add fluent interface for Document
+ * Minimal PHP 7.2
+ * Minimal Twig 3
+ * Enable PHP 8
+ * Enable Symfony 5
+
 1.1.0 (2018-03-20)
 ------------------
 
