@@ -17,24 +17,24 @@ task_deps__latest()( _run composer update )
 task_deps__lowest()( _run composer update --prefer-lowest )
 
 # Run composer
-# @service php-tools
+# @service php
 task_composer()( composer "$@" )
 
 # Run tests
-# @service php-tools
+# @service php
 task_tests()( "$(__fn phpunit-8 && echo "phpunit-8" || echo "phpunit")" --colors=always "$@" )
 
 # Fix code style
-# @service php-tools
+# @service php
 task_cs()( php-cs-fixer fix --ansi --allow-risky=yes "$@" )
 
 # Analyse code
-# @service php-tools
+# @service php
 task_analyse()( phpstan analyse --no-progress --ansi; __fn psalm && psalm || echo '' )
 
 # Remove all containers in project (use -v to remove volumes also)
 task_clean()( _docker_compose down --remove-orphans "$@" )
 
 # Run shell with tools
-# @service php-tools
+# @service php
 task_tools()( sh "$@" )

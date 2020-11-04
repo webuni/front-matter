@@ -56,5 +56,10 @@
         "psr-4": {
             "Webuni\\FrontMatter\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "analyse": "./run analyse",
+        "cs": "./run cs",
+        "tests": "./run tests"
     }
 }
