@@ -13,7 +13,9 @@
 namespace Webuni\FrontMatter\Tests\Markdown;
 
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
+use League\CommonMark\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension;
@@ -28,9 +30,24 @@ class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
         $environment->addExtension(new FrontMatterLeagueCommonMarkExtension(FrontMatter::createYaml()));
     }
 
-    public function testConvert()
+    /**
+     * @dataProvider getData
+     */
+    public function testConvert($markdown, $html, $data): void
     {
-        $converter = new CommonMarkConverter([], $this->environment);
-        $this->assertEquals("<h1>Head</h1>\n", $converter->convertToHtml("---\nfoo: bar\n---\nHead\n====\n"));
+        $parser = new DocParser($this->environment);
+        $renderer = new HtmlRenderer($this->environment);
+
+        $documentAST = $parser->parse($markdown);
+
+        $this->assertEquals($data, $documentAST->data);
+        $this->assertEquals($html, $renderer->renderBlock($documentAST));
+    }
+
+    public function getData(): array
+    {
+        return [
+            ["---\nfoo: bar\n---\nHead\n====\n", "<h1>Head</h1>\n", ['foo' => 'bar']],
+        ];
     }
 }
