@@ -58,9 +58,11 @@
         }
     },
     "scripts": {
+        "analyse": "./run analyse",
+        "cs": "./run cs",
+        "tests": "./run tests",
         "tools:php-cs-fixer": "tools/php-cs-fixer fix --dry-run",
         "tools:phpstan": "tools/phpstan analyze --level=5 src/",
-        "tools:phpunit": "tools/phpunit --verbose",
-        "tests": "./run tests"
+        "tools:phpunit": "tools/phpunit --verbose"
     }
 }
