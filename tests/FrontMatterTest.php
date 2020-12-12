@@ -25,11 +25,12 @@ class FrontMatterTest extends TestCase
     /**
      * @dataProvider getYaml
      */
-    public function testYaml($string, $data, $content)
+    public function testYaml($string, $data, $content, bool $hasFrontMatter)
     {
         $frontMatter = new FrontMatter();
         $document = $frontMatter->parse($string);
 
+        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
         $this->assertDocument($data, $content, $document);
         $this->assertEquals($string, $frontMatter->dump($document));
     }
@@ -37,11 +38,12 @@ class FrontMatterTest extends TestCase
     /**
      * @dataProvider getSeparator
      */
-    public function testYamlWithCustomSeparator($string, $data, $content)
+    public function testYamlWithCustomSeparator($string, $data, $content, bool $hasFrontMatter)
     {
         $frontMatter = new FrontMatter(null, '<!--', '-->');
         $document = $frontMatter->parse($string);
 
+        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
         $this->assertDocument($data, $content, $document);
         $this->assertEquals($string, $frontMatter->dump($document));
     }
@@ -49,11 +51,12 @@ class FrontMatterTest extends TestCase
     /**
      * @dataProvider getJson
      */
-    public function testJson($string, $data, $content)
+    public function testJson($string, $data, $content, bool $hasFrontMatter)
     {
         $frontMatter = new FrontMatter(new JsonProcessor());
         $document = $frontMatter->parse($string);
 
+        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
         $this->assertDocument($data, $content, $document);
         $this->assertEquals($string, $frontMatter->dump($document));
     }
@@ -61,11 +64,12 @@ class FrontMatterTest extends TestCase
     /**
      * @dataProvider getPlainJson
      */
-    public function testPlainJson($string, $data, $content)
+    public function testPlainJson($string, $data, $content, bool $hasFrontMatter)
     {
         $frontMatter = new FrontMatter(new JsonWithoutBracesProcessor(), '{', '}');
         $document = $frontMatter->parse($string);
 
+        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
         $this->assertDocument($data, $content, $document);
         $this->assertEquals($string, $frontMatter->dump($document));
     }
@@ -73,11 +77,12 @@ class FrontMatterTest extends TestCase
     /**
      * @dataProvider getYaml
      */
-    public function testNeon($string, $data, $content)
+    public function testNeon($string, $data, $content, bool $hasFrontMatter)
     {
         $frontMatter = new FrontMatter(new NeonProcessor());
         $document = $frontMatter->parse($string);
 
+        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
         $this->assertDocument($data, $content, $document);
         $this->assertEquals($string, $frontMatter->dump($document));
     }
@@ -85,11 +90,12 @@ class FrontMatterTest extends TestCase
     /**
      * @dataProvider getToml
      */
-    public function testToml($string, $data, $content)
+    public function testToml($string, $data, $content, bool $hasFrontMatter)
     {
         $frontMatter = new FrontMatter(new TomlProcessor());
         $document = $frontMatter->parse($string);
 
+        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
         $this->assertDocument($data, $content, $document);
 
         $this->expectException(\BadMethodCallException::class);
@@ -101,45 +107,45 @@ class FrontMatterTest extends TestCase
     public function getYaml()
     {
         return [
-            ['foo', [], 'foo'],
-            ["---\nfoo: bar\n---\n", ['foo' => 'bar'], ''],
-            ["---\nfoo: bar\n---\ntext", ['foo' => 'bar'], 'text'],
+            ['foo', [], 'foo', false],
+            ["---\nfoo: bar\n---\n", ['foo' => 'bar'], '', true],
+            ["---\nfoo: bar\n---\ntext", ['foo' => 'bar'], 'text', true],
         ];
     }
 
     public function getSeparator()
     {
         return [
-            ['foo', [], 'foo'],
-            ["<!--\nfoo: bar\n-->\n", ['foo' => 'bar'], ''],
-            ["<!--\nfoo: bar\n-->\ntext", ['foo' => 'bar'], 'text'],
+            ['foo', [], 'foo', false],
+            ["<!--\nfoo: bar\n-->\n", ['foo' => 'bar'], '', true],
+            ["<!--\nfoo: bar\n-->\ntext", ['foo' => 'bar'], 'text', true],
         ];
     }
 
     public function getJson()
     {
         return [
-            ['foo', [], 'foo'],
-            ["---\n{\"foo\":\"bar\"}\n---\n", ['foo' => 'bar'], ''],
-            ["---\n{\"foo\":\"bar\"}\n---\ntext", ['foo' => 'bar'], 'text'],
+            ['foo', [], 'foo', false],
+            ["---\n{\"foo\":\"bar\"}\n---\n", ['foo' => 'bar'], '', true],
+            ["---\n{\"foo\":\"bar\"}\n---\ntext", ['foo' => 'bar'], 'text', true],
         ];
     }
 
     public function getPlainJson()
     {
         return [
-            ['foo', [], 'foo'],
-            ["{\n\"foo\":\"bar\"\n}\n", ['foo' => 'bar'], ''],
-            ["{\n\"foo\":\"bar\"\n}\ntext", ['foo' => 'bar'], 'text'],
+            ['foo', [], 'foo', false],
+            ["{\n\"foo\":\"bar\"\n}\n", ['foo' => 'bar'], '', true],
+            ["{\n\"foo\":\"bar\"\n}\ntext", ['foo' => 'bar'], 'text', true],
         ];
     }
 
     public function getToml()
     {
         return [
-            ['foo', [], 'foo'],
-            ["---\nfoo = 'bar'\n---\n", ['foo' => 'bar'], ''],
-            ["---\nfoo = 'bar'\n---\ntext", ['foo' => 'bar'], 'text'],
+            ['foo', [], 'foo', false],
+            ["---\nfoo = 'bar'\n---\n", ['foo' => 'bar'], '', true],
+            ["---\nfoo = 'bar'\n---\ntext", ['foo' => 'bar'], 'text', true],
         ];
     }
 

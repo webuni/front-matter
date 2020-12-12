@@ -6,26 +6,97 @@ Front Matter
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webuni/front-matter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/webuni/front-matter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
 
-Front matter (yaml, json, neon, toml) parser and dumper for PHP. Front matter allows page-specific variables
-to be included at the top of a page.
+The most universal Front matter (yaml, json, neon, toml) parser and dumper for PHP.
+Front matter allows page-specific variables to be included at the top of a page.
 
 Installation
 ------------
 
-This project can be installed via Composer:
+This library can be installed via Composer:
 
     composer require webuni/front-matter
 
 Usage
 -----
 
-```php
-$frontMatter = new Webuni\FrontMatter\FrontMatter();
+### Parse an arbitrary string
 
-$document = $frontMatter->parse($str);
+```php
+<?php
+
+$frontMatter = new \Webuni\FrontMatter\FrontMatter();
+
+$document = $frontMatter->parse($string);
 
 $data = $document->getData();
 $content = $document->getContent();
+```
+
+### Check if a string has front matter
+
+```php
+<?php
+
+$frontMatter = new \Webuni\FrontMatter\FrontMatter();
+
+$hasFrontMatter = $frontMatter->exists($string);
+```
+
+### Twig loader
+
+If you want to store metadata about twig template, e.g.:
+
+```twig
+---
+title: Hello world
+menu: main
+weight: 20
+---
+{% extend layout.html.twig %}
+{% block content %}
+Hello world!
+{% endblock %}
+```
+
+you can use `FrontMatterLoader`, that decorates another Twig loader:
+
+```php
+$frontMatter = new \Webuni\FrontMatter\FrontMatter();
+$loader = new \Twig\Loader\FilesystemLoader(['path/to/templates']);
+$loader = new \Webuni\FrontMatter\Twig\FrontMatterLoader($frontMatter, $loader);
+
+$twig = new \Twig\Environment($loader);
+$content = $twig->render('template', []);
+// rendered the valid twig template without front matter
+```
+
+### Markdown
+
+The most commonly used front matter is for markdown files:
+
+```markdown
+---
+layout: post
+title: I Love Markdown
+tags:
+  - test
+  - example
+---
+
+# Hello World!
+```
+
+This library can be used with [league/commonmark](https://commonmark.thephpleague.com/):
+
+```php
+$frontMatter = new \Webuni\FrontMatter\FrontMatter();
+$extension = new \Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension($frontMatter);
+
+$environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
+$environment->addExtension($extension);
+
+$converter = new \League\CommonMark\CommonMarkConverter([], $environment);
+$html = $converter->convertToHtml('markdown'); // html without front matter
 ```
 
 Alternatives

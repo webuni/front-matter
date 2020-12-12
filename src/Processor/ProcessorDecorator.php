@@ -12,21 +12,23 @@
 
 namespace Webuni\FrontMatter\Processor;
 
-use Nette\Neon\Neon;
-
-final class NeonProcessor implements ProcessorInterface
+abstract class ProcessorDecorator implements ProcessorInterface
 {
+    /** @var ProcessorInterface */
+    private $wrapped;
+
+    public function __construct(ProcessorInterface $wrapped)
+    {
+        $this->wrapped = $wrapped;
+    }
+
     public function parse(string $string): array
     {
-        return (array) Neon::decode($string);
+        return $this->wrapped->parse($string);
     }
 
     public function dump(array $data): string
     {
-        if (empty($data)) {
-            return '';
-        }
-
-        return (string) Neon::encode($data, Neon::BLOCK);
+        return $this->wrapped->dump($data);
     }
 }

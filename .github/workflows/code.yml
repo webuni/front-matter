@@ -1,0 +1,30 @@
+name: Code
+
+on:
+  push: ~
+  pull_request: ~
+
+jobs:
+  code:
+    name: Code analyse on ${{ matrix.php }} (${{ matrix.deps_strategy }} dependencies)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deps_strategy: [ latest, lowest ]
+        php: [ 7.2, 7.3, 7.4 ]
+    steps:
+      - name: Update code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+          DEPS_STRATEGY: ${{ matrix.deps_strategy }}
+        run: ./run deps:$DEPS_STRATEGY
+      - name: Code style
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+        run: ./run cs --dry-run
+      - name: Code quality
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+        run: ./run analyse

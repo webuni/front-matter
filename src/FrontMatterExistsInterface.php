@@ -12,26 +12,14 @@
 
 namespace Webuni\FrontMatter;
 
-/**
- * Interface FrontMatterInterface.
- */
-interface FrontMatterInterface
+interface FrontMatterExistsInterface
 {
     /**
-     * Parse source.
+     * Check if a source has a front matter.
      *
      * @param string $source The source
      *
-     * @return Document
+     * @return bool If the source has a front matter
      */
-    public function parse(string $source): Document;
-
-    /**
-     * Dump document.
-     *
-     * @param Document $document The document
-     *
-     * @return string
-     */
-    public function dump(Document $document): string;
+    public function exists(string $source): bool;
 }

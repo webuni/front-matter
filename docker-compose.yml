@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  php:
+    image: "minidocks/php-tools:${PHP_VERSION:-7.4}"
+    volumes:
+      - .:$PWD
+      - ~/.composer/cache:/composer-cache
+      - ~/.composer/auth.json:/composer/auth.json
+    working_dir: $PWD
+    command: sshd

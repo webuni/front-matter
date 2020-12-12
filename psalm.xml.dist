@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="1"
+    resolveFromConfigFile="true"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <file name="src/Haml/FrontMatterFilter.php"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <MixedPropertyTypeCoercion>
+            <errorLevel type="suppress">
+                <file name="src/Markdown/FrontMatterLeagueCommonMarkExtension.php" />
+            </errorLevel>
+        </MixedPropertyTypeCoercion>
+    </issueHandlers>
+</psalm>

@@ -16,12 +16,12 @@ use Yosymfony\Toml\Toml;
 
 final class TomlProcessor implements ProcessorInterface
 {
-    public function parse($string)
+    public function parse(string $string): array
     {
-        return Toml::parse($string);
+        return (array) Toml::parse($string);
     }
 
-    public function dump($data)
+    public function dump(array $data): string
     {
         throw new \BadMethodCallException('Dump for Toml is not implemented.');
     }

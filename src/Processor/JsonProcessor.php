@@ -14,17 +14,17 @@ namespace Webuni\FrontMatter\Processor;
 
 final class JsonProcessor implements ProcessorInterface
 {
-    public function parse($string)
+    public function parse(string $string): array
     {
-        return json_decode($string, true);
+        return (array) json_decode($string, true);
     }
 
-    public function dump($data)
+    public function dump(array $data): string
     {
-        if (is_array($data) && empty($data)) {
+        if (empty($data)) {
             return '';
         }
 
-        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return (string) json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 }

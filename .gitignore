@@ -1,4 +1,8 @@
-/composer.lock
-/vendor/
-/tools/
 .phpunit.result.cache
+.runner
+composer.lock
+phpstan.neon
+phpunit.xml
+psalm.xml
+/tools/
+vendor/

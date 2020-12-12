@@ -14,42 +14,60 @@ namespace Webuni\FrontMatter;
 
 class Document
 {
+    /** @var string */
     private $content;
+
+    /** @var array<string, mixed> */
     private $data;
 
-    public function __construct($content, $data = [])
+    /**
+     * @param string $content
+     * @param array<string, mixed> $data
+     */
+    public function __construct(string $content = '', array $data = [])
     {
         $this->content = $content;
         $this->data = $data;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function getData()
+    /**
+     * @return array<string, mixed>
+     */
+    public function getData(): array
     {
         return $this->data;
     }
 
-    public function getDataWithContent($key = '__content')
+    public function getDataWithContent(string $key = '__content'): array
     {
         return array_merge($this->data, [$key => $this->content]);
     }
 
-    public function setContent($content)
+    public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
-    public function setData($data)
+    /**
+     * @param array<string, mixed> $data
+     * @return $this
+     */
+    public function setData(array $data): self
     {
         $this->data = $data;
+
+        return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return (string) $this->content;
+        return $this->content;
     }
 }
