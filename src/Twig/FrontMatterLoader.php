@@ -48,8 +48,15 @@ class FrontMatterLoader implements LoaderInterface
     public function getSourceContext(string $name): Source
     {
         $source = $this->loader->getSourceContext($name);
-        $document = $this->parser->parse($source->getCode());
+        $code = $source->getCode();
+        $document = $this->parser->parse($code);
+        $content = $document->getContent();
 
-        return new Source($document->getContent(), $source->getName(), $source->getPath());
+        $lines = $code === $content ? 1 : substr_count($code, "\n", 0, - strlen($content)) + 1;
+        if ($lines > 1) {
+            $content = "{% line $lines %}$content";
+        }
+
+        return new Source($content, $source->getName(), $source->getPath());
     }
 }

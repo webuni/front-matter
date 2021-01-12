@@ -18,6 +18,7 @@ use Twig\Loader\LoaderInterface;
 use Twig\Loader\SourceContextLoaderInterface;
 use Twig\Source;
 use Webuni\FrontMatter\Document;
+use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
 
@@ -29,7 +30,7 @@ class FrontMatterLoaderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->frontMatter = $this->createMock(FrontMatterInterface::class);
+        $this->frontMatter = FrontMatter::createYaml();
         $this->originalLoader = $this->createMock(LoaderInterface::class);
 
         $this->loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
@@ -55,19 +56,30 @@ class FrontMatterLoaderTest extends TestCase
         $this->assertTrue($loader->exists($name));
     }
 
-    public function testGetSourceContext(): void
+    /**
+     * @dataProvider getSource
+     */
+    public function testGetSourceContext(string $source, string $content, array $data, int $line = null): void
     {
-        $document = new Document('{{ foo }}', ['foo' => 'bar']);
         $name = 'name';
-        $source = new Source("---\nfoo: bar\n---\n{{ foo }}", $name);
+        $source = new Source($source, $name);
 
         $this->originalLoader
             ->method('getSourceContext')
             ->with($name)
             ->willReturn($source)
         ;
-        $this->frontMatter->method('parse')->with($source->getCode())->willReturn($document);
+        $document = $this->frontMatter->parse($source->getCode());
+        $this->assertEquals($content, $document->getContent());
+        $this->assertEquals($data, $document->getData());
+        $this->assertEquals(($line ? "{% line $line %}" : '').$content, $this->loader->getSourceContext($name)->getCode());
+    }
 
-        $this->assertEquals($document, $this->loader->getSourceContext($name)->getCode());
+    public function getSource(): array
+    {
+        return [
+            ["{{ foo }}", '{{ foo }}', []],
+            ["---\nfoo: bar\n---\n{{ foo }}", '{{ foo }}', ['foo' => 'bar'], 4],
+        ];
     }
 }
