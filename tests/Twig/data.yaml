@@ -1,0 +1,15 @@
+foo: bar
+number: 1234
+pi: 3.14159
+date: 2016-05-27
+empty: ~
+multiline: |
+  Multiple
+  Line
+  String
+object:
+  key: value
+  datetime: 2020-11-12 12:54:12
+  values:
+    - one
+    - two

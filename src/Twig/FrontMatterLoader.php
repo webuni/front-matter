@@ -24,10 +24,14 @@ class FrontMatterLoader implements LoaderInterface
     /** @var FrontMatterInterface */
     private $parser;
 
-    public function __construct(FrontMatterInterface $parser, LoaderInterface $loader)
+    /** @var DataToTwigConvertor */
+    private $convertor;
+
+    public function __construct(FrontMatterInterface $parser, LoaderInterface $loader, DataToTwigConvertor $convertor = null)
     {
         $this->loader = $loader;
         $this->parser = $parser;
+        $this->convertor = $convertor ?? DataToTwigConvertor::nothing();
     }
 
     public function getCacheKey(string $name): string
@@ -52,10 +56,14 @@ class FrontMatterLoader implements LoaderInterface
         $document = $this->parser->parse($code);
         $content = $document->getContent();
 
-        $lines = $code === $content ? 1 : substr_count($code, "\n", 0, - strlen($content)) + 1;
-        if ($lines > 1) {
-            $content = "{% line $lines %}$content";
+        if ($code === $content) {
+            return $source;
         }
+
+        $content = $this->convertor->convert($document->getData()).$content;
+
+        $lines = substr_count($code, "\n", 0, - strlen($content));
+        $content = "{% line $lines %}\n$content";
 
         return new Source($content, $source->getName(), $source->getPath());
     }

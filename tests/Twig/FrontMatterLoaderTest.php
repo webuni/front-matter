@@ -17,9 +17,7 @@ use Twig\Loader\ExistsLoaderInterface;
 use Twig\Loader\LoaderInterface;
 use Twig\Loader\SourceContextLoaderInterface;
 use Twig\Source;
-use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatter;
-use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
 
 class FrontMatterLoaderTest extends TestCase
@@ -72,14 +70,14 @@ class FrontMatterLoaderTest extends TestCase
         $document = $this->frontMatter->parse($source->getCode());
         $this->assertEquals($content, $document->getContent());
         $this->assertEquals($data, $document->getData());
-        $this->assertEquals(($line ? "{% line $line %}" : '').$content, $this->loader->getSourceContext($name)->getCode());
+        $this->assertEquals(($line ? "{% line $line %}\n" : '').$content, $this->loader->getSourceContext($name)->getCode());
     }
 
     public function getSource(): array
     {
         return [
             ["{{ foo }}", '{{ foo }}', []],
-            ["---\nfoo: bar\n---\n{{ foo }}", '{{ foo }}', ['foo' => 'bar'], 4],
+            ["---\nfoo: bar\n---\n{{ foo }}", '{{ foo }}', ['foo' => 'bar'], 3],
         ];
     }
 }

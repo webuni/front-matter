@@ -70,6 +70,38 @@ $content = $twig->render('template', []);
 // rendered the valid twig template without front matter
 ```
 
+It is possible to inject front matter to Twig template as variables:
+
+```php
+// …
+$converter = \Webuni\FrontMatter\Twig\DataToTwigConvertor::vars();
+$loader = new \Webuni\FrontMatter\Twig\FrontMatterLoader($frontMatter, $loader, $converter);
+// …
+```
+
+Loaded Twig template has this code:
+
+```twig
+{% set title = "Hello world" %}
+{% set menu = "main" %}
+{% set weight = 20 %}
+{% line 5 %}
+{% extend layout.html.twig %}
+{% block content %}
+Hello world!
+{% endblock %}
+```
+
+Available converters:
+
+| Converter                                 | Twig                                                       |
+| ----------------------------------------- | ---------------------------------------------------------- |
+| `DataToTwigConvertor::nothing()`          | ``                                                         |
+| `DataToTwigConvertor::vars()`             | `{% set key1 = value1 %}`                                  |
+| `DataToTwigConvertor::vars(false)`        | `{% set key1 = key1 is defined ? key1 : value1 %}`         |
+| `DataToTwigConvertor::var('name')`        | `{% set name = {key1: value1, key2: value2} %}`            |
+| `DataToTwigConvertor::var('name', false)` | `{% set name = name is defined ? name : {key1: value1} %}` |
+
 ### Markdown
 
 The most commonly used front matter is for markdown files:

@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.3.0 (2021-01-xx)
+------------------
+
+ * Add `{% line %}` tag to preserve line numbers in Twig templates
+ * Inject front matter data to Twig templates as template variables
+
 1.2.0 (2020-11-04)
 ------------------
 
