@@ -25,27 +25,29 @@ class DataToTwigConvertor
     /**
      * Data will not be written to the twig template
      *
-     * @return static
+     * @return self
      */
     public static function nothing(): self
     {
-        return new static(function (array $data) {
+        return new self(function (array $data) {
             return '';
         });
     }
 
     /**
+     * @psalm-suppress MixedAssignment
      * @param bool $force Define the value of the variable even if it is passed to the template
-     * @return static
+     * @return self
      */
     public static function vars(bool $force = true): self
     {
-        return new static(function (array $data) use ($force) {
+        return new self(function (array $data) use ($force) {
             $content = '';
             foreach ($data as $key => $value) {
-                if (preg_match('/^[a-z][0-9a-z_]*$/i', $key)) {
-                    $content .= "{% set $key = " . ($force ? '' : "$key is defined ? $key : ") . static::valueToTwig($value) . " %}\n";
+                if (is_int($key)) {
+                    continue;
                 }
+                $content .= "{% set $key = " . ($force ? '' : "$key is defined ? $key : ") . self::valueToTwig($value) . " %}\n";
             }
 
             return $content;
@@ -57,12 +59,12 @@ class DataToTwigConvertor
      *
      * @param string $name  Variable name
      * @param bool   $force Define the value of the variable even if it is passed to the template
-     * @return static
+     * @return self
      */
     public static function var(string $name, bool $force = true): self
     {
-        return new static(function (array $data) use ($name, $force) {
-            return "{% set $name = " . ($force ? '' : "$name is defined ? $name : ") . static::valueToTwig($data) . "%}\n";
+        return new self(function (array $data) use ($name, $force) {
+            return "{% set $name = " . ($force ? '' : "$name is defined ? $name : ") . self::valueToTwig($data) . "%}\n";
         });
     }
 
@@ -70,10 +72,15 @@ class DataToTwigConvertor
     {
         $convertor = $this->convertor;
 
-        return $convertor($data);
+        return (string) $convertor($data);
     }
 
-    public static function valueToTwig($value): string
+    /**
+     * @psalm-suppress MixedAssignment
+     * @param mixed $value
+     * @return string
+     */
+    protected static function valueToTwig($value): string
     {
         if ($value instanceof \DateTimeInterface) {
             return '(' . $value->getTimestamp() . "|date_modify('0sec'))";
@@ -84,7 +91,7 @@ class DataToTwigConvertor
             }
             return $twig."}";
         } else {
-            return json_encode($value);
+            return (string) json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
     }
 }
