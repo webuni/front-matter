@@ -137,6 +137,3 @@ Alternatives
 - https://github.com/spatie/yaml-front-matter
 - https://github.com/mnapoli/FrontYAML
 - https://github.com/Modularr/YAML-FrontMatter
-- https://github.com/vkbansal/FrontMatter
-- https://github.com/kzykhys/YamlFrontMatter
-- https://github.com/orchestral/kurenai
