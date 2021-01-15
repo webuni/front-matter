@@ -47,11 +47,11 @@ $hasFrontMatter = $frontMatter->exists($string);
 If you want to store metadata about twig template, e.g.:
 
 ```twig
----
+{#---
 title: Hello world
 menu: main
 weight: 20
----
+---#}
 {% extend layout.html.twig %}
 {% block content %}
 Hello world!
@@ -61,7 +61,7 @@ Hello world!
 you can use `FrontMatterLoader`, that decorates another Twig loader:
 
 ```php
-$frontMatter = new \Webuni\FrontMatter\FrontMatter();
+$frontMatter = \Webuni\FrontMatter\Twig\TwigCommentFrontMatter::create();
 $loader = new \Twig\Loader\FilesystemLoader(['path/to/templates']);
 $loader = new \Webuni\FrontMatter\Twig\FrontMatterLoader($frontMatter, $loader);
 

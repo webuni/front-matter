@@ -6,6 +6,7 @@ CHANGELOG
 
  * Add `{% line %}` tag to preserve line numbers in Twig templates
  * Inject front matter data to Twig templates as template variables
+ * Add support for Twig comment as front matter
 
 1.2.0 (2020-11-04)
 ------------------
