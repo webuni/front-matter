@@ -49,17 +49,20 @@
     },
     "autoload": {
         "psr-4": {
-            "Webuni\\FrontMatter\\": "src"
+            "Webuni\\FrontMatter\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Webuni\\FrontMatter\\Tests\\": "tests"
+            "Webuni\\FrontMatter\\Tests\\": "tests/"
         }
     },
     "scripts": {
         "analyse": "./run analyse",
         "cs": "./run cs",
-        "tests": "./run tests"
+        "tests": "./run tests",
+        "tools:php-cs-fixer": "tools/php-cs-fixer fix --dry-run",
+        "tools:phpstan": "tools/phpstan analyze --level=5 src/",
+        "tools:phpunit": "tools/phpunit --verbose"
     }
 }
