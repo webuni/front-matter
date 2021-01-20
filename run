@@ -10,15 +10,21 @@ if [ ! -f ~/.composer/auth.json ]; then echo "{}" > ~/.composer/auth.json; fi
 
 _decorator()( _decorator_docker_compose_run "$@" )
 
+symfony()( [ -n "$1" ] && echo "--with" "symfony/yaml:$1" || echo "" )
+
 # Update dependencies to the latest versions
-task_deps__latest()( _run composer update )
+task_deps__latest()( _run composer update $(symfony "$1"))
 
 # Update dependencies to the lowest versions
-task_deps__lowest()( _run composer update --prefer-lowest )
+task_deps__lowest()( _run composer update --prefer-lowest $(symfony "$1"))
 
 # Run composer
 # @service php
 task_composer()( composer "$@" )
+
+# Run composer
+# @service php
+task_composer__normalize()( composer normalize "$@" )
 
 # Run tests
 # @service php

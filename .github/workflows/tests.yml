@@ -6,20 +6,20 @@ on:
 
 jobs:
   phpunit:
-    name: PHPUnit on ${{ matrix.php }} (${{ matrix.deps_strategy }} dependencies)
+    name: PHPUnit on ${{ matrix.php }} and symfony ${{ matrix.symfony }} (${{ matrix.deps_strategy }} dependencies)
     runs-on: ubuntu-latest
     strategy:
       matrix:
         deps_strategy: [ latest, lowest ]
         php: [ '7.2', '7.3', '7.4', '8.0' ]
+        symfony: [ ^3.0, ^4.0, ^5.0 ]
     steps:
       - name: Update code
         uses: actions/checkout@v2
       - name: Install dependencies
         env:
           PHP_VERSION: ${{ matrix.php }}
-          DEPS_STRATEGY: ${{ matrix.deps_strategy }}
-        run: ./run deps:$DEPS_STRATEGY
+        run: ./run deps:${{ matrix.deps_strategy }} ${{ matrix.symfony }}
       - name: Tests
         env:
           PHP_VERSION: ${{ matrix.php }}
