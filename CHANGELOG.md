@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.3.0 (2021-01-xx)
+1.3.0 (2021-06-14)
 ------------------
 
  * Add `{% line %}` tag to preserve line numbers in Twig templates
