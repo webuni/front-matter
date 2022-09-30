@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.4.0 (2022-09-30)
+------------------
+
+* Enable CommonMark 2
+* Enable Symfony 6
+* Improve YamlProcessor with yaml configuration
+
 1.3.0 (2021-06-14)
 ------------------
 

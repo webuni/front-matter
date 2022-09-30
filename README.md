@@ -3,8 +3,8 @@ Front Matter
 
 [![Packagist](https://img.shields.io/packagist/v/webuni/front-matter.svg?style=flat-square)](https://packagist.org/packages/webuni/front-matter)
 [![Build Status](https://img.shields.io/github/workflow/status/webuni/front-matter/Tests/master.svg?style=flat-square)](https://github.com/webuni/front-matter/actions?query=workflow%3ATests+branch%3Amaster)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webuni/front-matter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/webuni/front-matter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/webuni/front-matter?style=flat-square)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/webuni/front-matter?style=flat-square)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
 
 The most universal Front matter (yaml, json, neon, toml) parser and dumper for PHP.
 Front matter allows page-specific variables to be included at the top of a page.
@@ -124,10 +124,8 @@ This library can be used with [league/commonmark](https://commonmark.thephpleagu
 $frontMatter = new \Webuni\FrontMatter\FrontMatter();
 $extension = new \Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension($frontMatter);
 
-$environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
-$environment->addExtension($extension);
-
-$converter = new \League\CommonMark\CommonMarkConverter([], $environment);
+$converter = new \League\CommonMark\CommonMarkConverter([]);
+$converter->getEnvironment()->addExtension($extension);
 $html = $converter->convertToHtml('markdown'); // html without front matter
 ```
 

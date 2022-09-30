@@ -16,9 +16,33 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlProcessor implements ProcessorInterface
 {
+    /** @var int */
+    private $parseFlags;
+
+    /** @var int */
+    private $dumpFlags;
+
+    /**
+     * @var int
+     */
+    private $inline;
+
+    /**
+     * @var int
+     */
+    private $indent;
+
+    public function __construct(int $parseFlags = 0, int $dumpFlags = 0, $inline = 2, $indent = 4)
+    {
+        $this->parseFlags = $parseFlags;
+        $this->dumpFlags = $dumpFlags;
+        $this->inline = $inline;
+        $this->indent = $indent;
+    }
+
     public function parse(string $string): array
     {
-        return (array) Yaml::parse($string);
+        return (array) Yaml::parse($string, $this->parseFlags);
     }
 
     public function dump(array $data): string
@@ -27,6 +51,6 @@ final class YamlProcessor implements ProcessorInterface
             return '';
         }
 
-        return Yaml::dump($data);
+        return Yaml::dump($data, $this->inline, $this->indent, $this->dumpFlags);
     }
 }

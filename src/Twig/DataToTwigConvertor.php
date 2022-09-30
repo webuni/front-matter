@@ -84,14 +84,16 @@ class DataToTwigConvertor
     {
         if ($value instanceof \DateTimeInterface) {
             return '(' . $value->getTimestamp() . "|date_modify('0sec'))";
-        } elseif (is_array($value)) {
+        }
+
+        if (is_array($value)) {
             $twig = '{';
             foreach ($value as $key => $val) {
                 $twig .= "$key: ".static::valueToTwig($val).", ";
             }
             return $twig."}";
-        } else {
-            return (string) json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
+
+        return (string) json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 }

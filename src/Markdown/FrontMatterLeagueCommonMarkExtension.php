@@ -12,7 +12,8 @@
 
 namespace Webuni\FrontMatter\Markdown;
 
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use Dflydev\DotAccessData\Data;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Input\MarkdownInput;
@@ -28,7 +29,7 @@ class FrontMatterLeagueCommonMarkExtension implements ExtensionInterface
         $this->frontMatter = $frontMatter;
     }
 
-    public function register(ConfigurableEnvironmentInterface $environment): void
+    public function register($environment): void
     {
         $environment->addEventListener(DocumentPreParsedEvent::class, [$this, 'parse']);
     }
@@ -39,7 +40,12 @@ class FrontMatterLeagueCommonMarkExtension implements ExtensionInterface
         $document = $this->frontMatter->parse($content);
         $data = $event->getDocument()->data;
 
-        $event->getDocument()->data = array_merge($document->getData(), $data);
+        if ($data instanceof Data) {
+            $data->import($document->getData(), Data::MERGE);
+        } else {
+            $event->getDocument()->data = array_merge($document->getData(), $data);
+        }
+
         $event->replaceMarkdown(new MarkdownInput($document->getContent()));
     }
 }

@@ -12,10 +12,13 @@
 
 namespace Webuni\FrontMatter\Tests\Markdown;
 
-use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\Environment as Environment1;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\HtmlRenderer as HtmlRenderer1;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension;
@@ -26,8 +29,16 @@ class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->environment = $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new FrontMatterLeagueCommonMarkExtension(FrontMatter::createYaml()));
+        $frontMatter = FrontMatter::createYaml();
+        if (class_exists(Environment1::class)) {
+            $environment = Environment1::createCommonMarkEnvironment();
+        } else {
+            $environment = new Environment();
+            $environment->addExtension(new CommonMarkCoreExtension());
+        }
+        $environment->addExtension(new FrontMatterLeagueCommonMarkExtension($frontMatter));
+
+        $this->environment = $environment;
     }
 
     /**
@@ -35,13 +46,14 @@ class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
      */
     public function testConvert($markdown, $html, $data): void
     {
-        $parser = new DocParser($this->environment);
-        $renderer = new HtmlRenderer($this->environment);
+        $parser = class_exists(DocParser::class) ? new DocParser($this->environment) : new MarkdownParser($this->environment);
+        $renderer = class_exists(HtmlRenderer1::class) ? new HtmlRenderer1($this->environment) : new HtmlRenderer($this->environment);
 
         $documentAST = $parser->parse($markdown);
+        $documentData = is_array($documentAST->data) ? $documentAST->data : $documentAST->data->export();
 
-        $this->assertEquals($data, $documentAST->data);
-        $this->assertEquals($html, $renderer->renderBlock($documentAST));
+        $this->assertEquals([], array_diff_assoc($data, $documentData));
+        $this->assertEquals($html, method_exists($renderer, 'renderBlock') ? $renderer->renderBlock($documentAST) : $renderer->renderDocument($documentAST));
     }
 
     public function getData(): array
