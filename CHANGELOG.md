@@ -4,6 +4,7 @@ CHANGELOG
 1.5.0 (2022-12-12)
 ------------------
 
+* Remove indentation from front matter
 * Add support for Pug comment as front matter
 * Change line number preservation in Twig templates compatible with other template engines
 

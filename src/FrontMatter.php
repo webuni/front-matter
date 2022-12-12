@@ -52,7 +52,7 @@ final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterf
         $this->endSep = $endSep;
         $this->processor = $processor ?: new YamlProcessor();
 
-        $this->regexp = '{^(?:'.preg_quote($startSep).")[\r\n|\n]*(.*?)[\r\n|\n]+(?:".preg_quote($endSep).")[\r\n|\n]*(.*)$}s";
+        $this->regexp = '{^(?:'.preg_quote($startSep, null).")[\r\n|\n]*(.*?)[\r\n|\n]+(?:".preg_quote($endSep, null).")[\r\n|\n]*(.*)$}s";
     }
 
     /**
@@ -60,14 +60,16 @@ final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterf
      */
     public function parse(string $source): Document
     {
-        if (preg_match($this->regexp, $source, $matches) === 1) {
-            /** @var array<string, mixed> $data */
-            $data = '' !== trim($matches[1]) ? $this->processor->parse(trim($matches[1])) : [];
-
-            return new Document($matches[2], $data);
+        if (preg_match($this->regexp, $source, $matches) !== 1) {
+            return new Document($source);
         }
 
-        return new Document($source);
+        $frontMatter = $this->cancelIndentation($matches[1]);
+
+        /** @var array<string, mixed> $data */
+        $data = '' !== $frontMatter ? $this->processor->parse($frontMatter) : [];
+
+        return new Document($matches[2], $data);
     }
 
     /**
@@ -89,5 +91,31 @@ final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterf
     public function exists(string $source): bool
     {
         return preg_match($this->regexp, $source) === 1;
+    }
+
+    private function cancelIndentation(string $string): string
+    {
+        $indent = $this->revealIndention($string);
+
+        if ('' === $indent) {
+            return trim($string);
+        }
+
+        return trim(preg_replace("/^$indent/m", '', $string));
+    }
+
+    private function revealIndention(string $string): string
+    {
+        $separator = "\r\n";
+        $line = strtok($string, $separator);
+        while ($line !== false) {
+            if (trim($line) !== '') {
+                preg_match('/^(\s+)/', $line, $match);
+                return $match[1] ?? '';
+            }
+            $line = strtok($separator);
+        }
+
+        return '';
     }
 }
