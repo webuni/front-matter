@@ -20,91 +20,91 @@ use Webuni\FrontMatter\Processor\JsonWithoutBracesProcessor;
 use Webuni\FrontMatter\Processor\NeonProcessor;
 use Webuni\FrontMatter\Processor\TomlProcessor;
 
-class FrontMatterTest extends TestCase
+final class FrontMatterTest extends TestCase
 {
     /**
      * @dataProvider getYaml
      */
-    public function testYaml($string, $data, $content, bool $hasFrontMatter)
+    public function testYaml($string, $data, $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter();
         $document = $frontMatter->parse($string);
 
-        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
-        $this->assertDocument($data, $content, $document);
-        $this->assertEquals($string, $frontMatter->dump($document));
+        self::assertSame($hasFrontMatter, $frontMatter->exists($string));
+        self::assertDocument($data, $content, $document);
+        self::assertEquals($string, $frontMatter->dump($document));
     }
 
     /**
      * @dataProvider getSeparator
      */
-    public function testYamlWithCustomSeparator($string, $data, $content, bool $hasFrontMatter)
+    public function testYamlWithCustomSeparator($string, $data, $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(null, '<!--', '-->');
         $document = $frontMatter->parse($string);
 
-        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
-        $this->assertDocument($data, $content, $document);
-        $this->assertEquals($string, $frontMatter->dump($document));
+        self::assertSame($hasFrontMatter, $frontMatter->exists($string));
+        self::assertDocument($data, $content, $document);
+        self::assertEquals($string, $frontMatter->dump($document));
     }
 
     /**
      * @dataProvider getJson
      */
-    public function testJson($string, $data, $content, bool $hasFrontMatter)
+    public function testJson($string, $data, $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new JsonProcessor());
         $document = $frontMatter->parse($string);
 
-        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
-        $this->assertDocument($data, $content, $document);
-        $this->assertEquals($string, $frontMatter->dump($document));
+        self::assertSame($hasFrontMatter, $frontMatter->exists($string));
+        self::assertDocument($data, $content, $document);
+        self::assertEquals($string, $frontMatter->dump($document));
     }
 
     /**
      * @dataProvider getPlainJson
      */
-    public function testPlainJson($string, $data, $content, bool $hasFrontMatter)
+    public function testPlainJson($string, $data, $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new JsonWithoutBracesProcessor(), '{', '}');
         $document = $frontMatter->parse($string);
 
-        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
-        $this->assertDocument($data, $content, $document);
-        $this->assertEquals($string, $frontMatter->dump($document));
+        self::assertSame($hasFrontMatter, $frontMatter->exists($string));
+        self::assertDocument($data, $content, $document);
+        self::assertEquals($string, $frontMatter->dump($document));
     }
 
     /**
      * @dataProvider getYaml
      */
-    public function testNeon($string, $data, $content, bool $hasFrontMatter)
+    public function testNeon($string, $data, $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new NeonProcessor());
         $document = $frontMatter->parse($string);
 
-        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
-        $this->assertDocument($data, $content, $document);
-        $this->assertEquals($string, $frontMatter->dump($document));
+        self::assertSame($hasFrontMatter, $frontMatter->exists($string));
+        self::assertDocument($data, $content, $document);
+        self::assertEquals($string, $frontMatter->dump($document));
     }
 
     /**
      * @dataProvider getToml
      */
-    public function testToml($string, $data, $content, bool $hasFrontMatter)
+    public function testToml($string, $data, $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new TomlProcessor());
         $document = $frontMatter->parse($string);
 
-        $this->assertSame($hasFrontMatter, $frontMatter->exists($string));
-        $this->assertDocument($data, $content, $document);
+        self::assertSame($hasFrontMatter, $frontMatter->exists($string));
+        self::assertDocument($data, $content, $document);
 
         $this->expectException(\BadMethodCallException::class);
         $this->expectExceptionMessage('Dump for Toml is not implemented.');
 
-        $this->assertEquals($string, $frontMatter->dump($document));
+        self::assertEquals($string, $frontMatter->dump($document));
     }
 
-    public function getYaml()
+    public function getYaml(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -113,7 +113,7 @@ class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getSeparator()
+    public function getSeparator(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -122,7 +122,7 @@ class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getJson()
+    public function getJson(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -131,7 +131,7 @@ class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getPlainJson()
+    public function getPlainJson(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -140,7 +140,7 @@ class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getToml()
+    public function getToml(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -149,9 +149,9 @@ class FrontMatterTest extends TestCase
         ];
     }
 
-    private function assertDocument($data, $content, Document $document)
+    private static function assertDocument($data, $content, Document $document): void
     {
-        $this->assertEquals($data, $document->getData());
-        $this->assertEquals($content, $document->getContent());
+        self::assertEquals($data, $document->getData());
+        self::assertEquals($content, $document->getContent());
     }
 }

@@ -15,37 +15,37 @@ namespace Webuni\FrontMatter\Tests;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
 
-class DocumentTest extends TestCase
+final class DocumentTest extends TestCase
 {
-    public function testReturnContent()
+    public function testReturnContent(): void
     {
         $document = new Document($content = 'content');
-        $this->assertEquals($content, $document->getContent());
+        self::assertEquals($content, $document->getContent());
     }
 
-    public function testReturnData()
+    public function testReturnData(): void
     {
         $document = new Document('content', $data = ['foo' => 'bar']);
-        $this->assertEquals($data, $document->getData());
+        self::assertEquals($data, $document->getData());
     }
 
-    public function testReturnDataWithContent()
+    public function testReturnDataWithContent(): void
     {
         $document = new Document($content = 'content', ['foo' => 'bar']);
-        $this->assertEquals(['foo' => 'bar', '__content' => $content], $document->getDataWithContent());
+        self::assertEquals(['foo' => 'bar', '__content' => $content], $document->getDataWithContent());
     }
 
-    public function testSetContent()
+    public function testSetContent(): void
     {
         $document = new Document('');
         $document->setContent($content = 'content');
-        $this->assertEquals($content, $document->getContent());
+        self::assertEquals($content, $document->getContent());
     }
 
-    public function testSetData()
+    public function testSetData(): void
     {
         $document = new Document('');
         $document->setData($data = ['foo' => 'bar']);
-        $this->assertEquals($data, $document->getData());
+        self::assertEquals($data, $document->getData());
     }
 }

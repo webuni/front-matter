@@ -16,15 +16,15 @@ use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Twig\TwigCommentFrontMatter;
 
-class TwigCommentFrontMatterTest extends TestCase
+final class TwigCommentFrontMatterTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $frontMatter = TwigCommentFrontMatter::create();
-        $this->assertInstanceOf(FrontMatter::class, $frontMatter);
+        self::assertInstanceOf(FrontMatter::class, $frontMatter);
 
         $document = $frontMatter->parse("{#---\nfoo: bar\n---#}\nContent\n");
-        $this->assertEquals(['foo' => 'bar'], $document->getData());
-        $this->assertEquals("Content\n", $document->getContent());
+        self::assertEquals(['foo' => 'bar'], $document->getData());
+        self::assertEquals("Content\n", $document->getContent());
     }
 }

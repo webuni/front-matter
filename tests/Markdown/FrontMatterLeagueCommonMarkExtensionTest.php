@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension;
 
-class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
+final class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
 {
     private $environment;
 
@@ -52,8 +52,8 @@ class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
         $documentAST = $parser->parse($markdown);
         $documentData = is_array($documentAST->data) ? $documentAST->data : $documentAST->data->export();
 
-        $this->assertEquals([], array_diff_assoc($data, $documentData));
-        $this->assertEquals($html, method_exists($renderer, 'renderBlock') ? $renderer->renderBlock($documentAST) : $renderer->renderDocument($documentAST));
+        self::assertEquals([], array_diff_assoc($data, $documentData));
+        self::assertEquals($html, method_exists($renderer, 'renderBlock') ? $renderer->renderBlock($documentAST) : $renderer->renderDocument($documentAST));
     }
 
     public function getData(): array

@@ -13,7 +13,6 @@
 namespace Webuni\FrontMatter\Markdown;
 
 use Dflydev\DotAccessData\Data;
-use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Input\MarkdownInput;

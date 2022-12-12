@@ -20,7 +20,7 @@ use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
 use Webuni\FrontMatter\Haml\FrontMatterFilter;
 
-class FrontMatterFilterTest extends TestCase
+final class FrontMatterFilterTest extends TestCase
 {
     private $frontMatter;
     private $originalFilter;
@@ -33,31 +33,31 @@ class FrontMatterFilterTest extends TestCase
         $this->filter = new FrontMatterFilter($this->frontMatter, $this->originalFilter);
     }
 
-    public function testIsOptimizable()
+    public function testIsOptimizable(): void
     {
         $renderer = $this->createMock(RendererAbstract::class);
         $node = $this->createMock(Filter::class);
 
         $this->originalFilter->method('isOptimizable')->with($renderer, $node, $options = [])->willReturn(true);
-        $this->assertTrue($this->filter->isOptimizable($renderer, $node, $options));
+        self::assertTrue($this->filter->isOptimizable($renderer, $node, $options));
     }
 
-    public function testOptimize()
+    public function testOptimize(): void
     {
         $renderer = $this->createMock(RendererAbstract::class);
         $node = $this->createMock(Filter::class);
 
         $this->originalFilter->method('optimize')->with($renderer, $node, $options = [])->willReturn('foo');
-        $this->assertEquals('foo', $this->filter->optimize($renderer, $node, $options));
+        self::assertEquals('foo', $this->filter->optimize($renderer, $node, $options));
     }
 
-    public function testFilter()
+    public function testFilter(): void
     {
         $document = new Document('');
 
         $this->frontMatter->method('parse')->with($content = "---\n----\nstring")->willReturn($document);
         $this->originalFilter->method('filter')->with($document, $context = [], $options = [])->willReturn('string');
 
-        $this->assertEquals($document, $this->filter->filter($content, $context, $options));
+        self::assertEquals($document, $this->filter->filter($content, $context, $options));
     }
 }

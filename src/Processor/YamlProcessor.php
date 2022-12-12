@@ -22,17 +22,13 @@ final class YamlProcessor implements ProcessorInterface
     /** @var int */
     private $dumpFlags;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $inline;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $indent;
 
-    public function __construct(int $parseFlags = 0, int $dumpFlags = 0, $inline = 2, $indent = 4)
+    public function __construct(int $parseFlags = 0, int $dumpFlags = 0, int $inline = 2, int $indent = 4)
     {
         $this->parseFlags = $parseFlags;
         $this->dumpFlags = $dumpFlags;

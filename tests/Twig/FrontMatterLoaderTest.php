@@ -20,7 +20,7 @@ use Twig\Source;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
 
-class FrontMatterLoaderTest extends TestCase
+final class FrontMatterLoaderTest extends TestCase
 {
     private $frontMatter;
     private $originalLoader;
@@ -37,13 +37,13 @@ class FrontMatterLoaderTest extends TestCase
     public function testGetCacheKey(): void
     {
         $this->originalLoader->method('getCacheKey')->with($name = 'name')->willReturn($name);
-        $this->assertEquals($name, $this->loader->getCacheKey($name));
+        self::assertEquals($name, $this->loader->getCacheKey($name));
     }
 
     public function testIsFresh(): void
     {
         $this->originalLoader->method('isFresh')->with($name = 'name', $time = time())->willReturn(true);
-        $this->assertTrue($this->loader->isFresh($name, $time));
+        self::assertTrue($this->loader->isFresh($name, $time));
     }
 
     public function testExists(): void
@@ -51,7 +51,7 @@ class FrontMatterLoaderTest extends TestCase
         $loader = new FrontMatterLoader($this->frontMatter, $this->originalLoader);
 
         $this->originalLoader->method('exists')->with($name = 'name')->willReturn(true);
-        $this->assertTrue($loader->exists($name));
+        self::assertTrue($loader->exists($name));
     }
 
     /**

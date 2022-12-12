@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Webuni\FrontMatter\Twig\DataToTwigConvertor;
 
-class DataToTwigConvertorTest extends TestCase
+final class DataToTwigConvertorTest extends TestCase
 {
     private $data;
 
@@ -29,7 +29,7 @@ class DataToTwigConvertorTest extends TestCase
     public function testNothing(): void
     {
         $convertor = DataToTwigConvertor::nothing();
-        $this->assertEquals('', $convertor->convert($this->data));
+        self::assertEquals('', $convertor->convert($this->data));
     }
 
     public function testVars(): void
@@ -43,7 +43,7 @@ class DataToTwigConvertorTest extends TestCase
 {% set multiline = "Multiple\nLine\nString\n" %}
 {% set object = {key: "value", datetime: (1605185652|date_modify(\'0sec\')), values: {0: "one", 1: "two", }, } %}
 ';
-        $this->assertEquals($twig, $convertor->convert($this->data));
+        self::assertEquals($twig, $convertor->convert($this->data));
     }
 
     public function testOptionalVars(): void
@@ -57,13 +57,13 @@ class DataToTwigConvertorTest extends TestCase
 {% set multiline = multiline is defined ? multiline : "Multiple\nLine\nString\n" %}
 {% set object = object is defined ? object : {key: "value", datetime: (1605185652|date_modify(\'0sec\')), values: {0: "one", 1: "two", }, } %}
 ';
-        $this->assertEquals($twig, $convertor->convert($this->data));
+        self::assertEquals($twig, $convertor->convert($this->data));
     }
 
     public function testVar(): void
     {
         $convertor = DataToTwigConvertor::var('parameters');
         $twig = '{% set parameters = {foo: "bar", number: 1234, pi: 3.14159, date: (1464307200|date_modify(\'0sec\')), empty: null, multiline: "Multiple\nLine\nString\n", object: {key: "value", datetime: (1605185652|date_modify(\'0sec\')), values: {0: "one", 1: "two", }, }, }%}'."\n";
-        $this->assertEquals($twig, $convertor->convert($this->data));
+        self::assertEquals($twig, $convertor->convert($this->data));
     }
 }
