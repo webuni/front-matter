@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         deps_strategy: [ latest, lowest ]
-        php: [ '7.2', '7.3', '7.4', '8.0', '8.1' ]
+        php: [ '7.4', '8.0', '8.1' ]
         symfony: [ ^3.0, ^4.0, ^5.0, ^6.0 ]
     steps:
       - name: Update code

@@ -8,6 +8,7 @@ CHANGELOG
 * Add front matter chain
 * Add support for Pug comment as front matter
 * Change line number preservation in Twig templates compatible with other template engines
+* Remove support for PHP 7.2 and 7.3
 
 1.4.0 (2022-09-30)
 ------------------
