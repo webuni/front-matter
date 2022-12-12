@@ -4,6 +4,7 @@ CHANGELOG
 1.5.0 (2022-12-12)
 ------------------
 
+* Add support for Pug comment as front matter
 * Change line number preservation in Twig templates compatible with other template engines
 
 1.4.0 (2022-09-30)
