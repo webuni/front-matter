@@ -5,6 +5,7 @@ CHANGELOG
 ------------------
 
 * Remove indentation from front matter
+* Add front matter chain
 * Add support for Pug comment as front matter
 * Change line number preservation in Twig templates compatible with other template engines
 
