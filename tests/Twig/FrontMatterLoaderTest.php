@@ -57,7 +57,7 @@ class FrontMatterLoaderTest extends TestCase
     /**
      * @dataProvider getSource
      */
-    public function testGetSourceContext(string $source, string $content, array $data, int $line = null): void
+    public function testGetSourceContext(string $source, string $content, array $data): void
     {
         $name = 'name';
         $source = new Source($source, $name);
@@ -68,16 +68,15 @@ class FrontMatterLoaderTest extends TestCase
             ->willReturn($source)
         ;
         $document = $this->frontMatter->parse($source->getCode());
-        $this->assertEquals($content, $document->getContent());
-        $this->assertEquals($data, $document->getData());
-        $this->assertEquals(($line ? "{% line $line %}\n" : '').$content, $this->loader->getSourceContext($name)->getCode());
+        self::assertEquals($data, $document->getData());
+        self::assertEquals($content, $this->loader->getSourceContext($name)->getCode());
     }
 
     public function getSource(): array
     {
         return [
             ["{{ foo }}", '{{ foo }}', []],
-            ["---\nfoo: bar\n---\n{{ foo }}", '{{ foo }}', ['foo' => 'bar'], 3],
+            ["---\nfoo: bar\n---\n{{ foo }}", "\n\n\n\n{{ foo }}", ['foo' => 'bar']],
         ];
     }
 }
