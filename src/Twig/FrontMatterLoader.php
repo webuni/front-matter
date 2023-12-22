@@ -60,7 +60,7 @@ class FrontMatterLoader implements LoaderInterface
             return $source;
         }
 
-        $content = $this->convertor->convert($document->getData()).$content;
+        $content = ($this->convertor)($document->getData()).$content;
 
         $lines = substr_count($code, "\n", 0, - strlen($content));
         $content = str_repeat("\n", $lines + 1).$content;

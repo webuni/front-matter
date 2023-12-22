@@ -17,6 +17,14 @@ class DataToTwigConvertor
     /** @var callable */
     private $convertor;
 
+    public function __invoke(array $data): string
+    {
+        $convertor = $this->convertor;
+
+        return (string) $convertor($data);
+    }
+
+
     protected function __construct(callable $convertor)
     {
         $this->convertor = $convertor;
@@ -66,13 +74,6 @@ class DataToTwigConvertor
         return new self(function (array $data) use ($name, $force) {
             return "{% set $name = " . ($force ? '' : "$name is defined ? $name : ") . self::valueToTwig($data) . "%}\n";
         });
-    }
-
-    public function convert(array $data): string
-    {
-        $convertor = $this->convertor;
-
-        return (string) $convertor($data);
     }
 
     /**
