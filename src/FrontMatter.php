@@ -17,7 +17,7 @@ use Webuni\FrontMatter\Processor\ProcessorInterface;
 use Webuni\FrontMatter\Processor\TomlProcessor;
 use Webuni\FrontMatter\Processor\YamlProcessor;
 
-final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterface
+final class FrontMatter implements FrontMatterInterface
 {
     private string $startSep;
     private string $endSep;

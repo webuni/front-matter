@@ -18,6 +18,15 @@ namespace Webuni\FrontMatter;
 interface FrontMatterInterface
 {
     /**
+     * Check if a source has a front matter.
+     *
+     * @param string $source The source
+     *
+     * @return bool If the source has a front matter
+     */
+    public function exists(string $source): bool;
+
+    /**
      * Parse source.
      *
      * @param string $source The source

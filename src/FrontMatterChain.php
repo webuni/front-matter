@@ -12,7 +12,7 @@
 
 namespace Webuni\FrontMatter;
 
-final class FrontMatterChain implements FrontMatterInterface, FrontMatterExistsInterface
+final class FrontMatterChain implements FrontMatterInterface
 {
     /** @var FrontMatterInterface[] */
     private array $adapters = [];
@@ -35,7 +35,7 @@ final class FrontMatterChain implements FrontMatterInterface, FrontMatterExistsI
     public function exists(string $source): bool
     {
         foreach ($this->adapters as $adapter) {
-            if ($adapter instanceof FrontMatterExistsInterface && $adapter->exists($source)) {
+            if ($adapter->exists($source)) {
                 return true;
             }
         }
@@ -46,7 +46,7 @@ final class FrontMatterChain implements FrontMatterInterface, FrontMatterExistsI
     public function parse(string $source): Document
     {
         foreach ($this->adapters as $adapter) {
-            if ($adapter instanceof FrontMatterExistsInterface && $adapter->exists($source)) {
+            if ($adapter->exists($source)) {
                 return $adapter->parse($source);
             }
         }
