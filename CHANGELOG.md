@@ -5,6 +5,7 @@ CHANGELOG
 ------------------
 
 * Enable Symfony 7
+* Remove support for CommonMark 1
 
 1.5.0 (2022-12-12)
 ------------------

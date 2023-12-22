@@ -16,7 +16,6 @@ use League\CommonMark\DocParser;
 use League\CommonMark\Environment as Environment1;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\HtmlRenderer as HtmlRenderer1;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
 use PHPUnit\Framework\TestCase;
@@ -25,17 +24,13 @@ use Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension;
 
 final class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
 {
-    private $environment;
+    private Environment $environment;
 
     protected function setUp(): void
     {
         $frontMatter = FrontMatter::createYaml();
-        if (class_exists(Environment1::class)) {
-            $environment = Environment1::createCommonMarkEnvironment();
-        } else {
-            $environment = new Environment();
-            $environment->addExtension(new CommonMarkCoreExtension());
-        }
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new FrontMatterLeagueCommonMarkExtension($frontMatter));
 
         $this->environment = $environment;
@@ -44,19 +39,19 @@ final class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
     /**
      * @dataProvider getData
      */
-    public function testConvert($markdown, $html, $data): void
+    public function testConvert(string $markdown, string $html, array $data): void
     {
-        $parser = class_exists(DocParser::class) ? new DocParser($this->environment) : new MarkdownParser($this->environment);
-        $renderer = class_exists(HtmlRenderer1::class) ? new HtmlRenderer1($this->environment) : new HtmlRenderer($this->environment);
+        $parser = new MarkdownParser($this->environment);
+        $renderer = new HtmlRenderer($this->environment);
 
         $documentAST = $parser->parse($markdown);
-        $documentData = is_array($documentAST->data) ? $documentAST->data : $documentAST->data->export();
+        $documentData = $documentAST->data->export();
 
         self::assertEquals([], array_diff_assoc($data, $documentData));
-        self::assertEquals($html, method_exists($renderer, 'renderBlock') ? $renderer->renderBlock($documentAST) : $renderer->renderDocument($documentAST));
+        self::assertEquals($html, $renderer->renderDocument($documentAST));
     }
 
-    public function getData(): array
+    public static function getData(): array
     {
         return [
             ["---\nfoo: bar\n---\nHead\n====\n", "<h1>Head</h1>\n", ['foo' => 'bar']],
