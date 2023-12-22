@@ -15,6 +15,7 @@ namespace Webuni\FrontMatter\Tests\Haml;
 use MtHaml\Filter\FilterInterface;
 use MtHaml\Node\Filter;
 use MtHaml\NodeVisitor\RendererAbstract;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatterInterface;
@@ -22,9 +23,11 @@ use Webuni\FrontMatter\Haml\FrontMatterFilter;
 
 final class FrontMatterFilterTest extends TestCase
 {
-    private $frontMatter;
-    private $originalFilter;
-    private $filter;
+    /** @var MockObject&FrontMatterInterface */
+    private MockObject $frontMatter;
+    /** @var MockObject&FilterInterface */
+    private MockObject $originalFilter;
+    private FrontMatterFilter $filter;
 
     protected function setUp(): void
     {

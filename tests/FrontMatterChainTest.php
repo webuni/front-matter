@@ -17,10 +17,11 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\FrontMatterChain;
+use Webuni\FrontMatter\FrontMatterInterface;
 
 final class FrontMatterChainTest extends TestCase
 {
-    private $chain;
+    private FrontMatterChain $chain;
 
     protected function setUp(): void
     {
@@ -33,7 +34,7 @@ final class FrontMatterChainTest extends TestCase
     public function testEmptyAdapters(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this>$this->expectExceptionMessage('It is necessary add at least one front matter adapter Webuni\FrontMatter\FrontMatterInterface');
+        $this->expectExceptionMessage('It is necessary add at least one front matter adapter '.FrontMatterInterface::class);
 
         new FrontMatterChain([]);
     }
@@ -41,7 +42,7 @@ final class FrontMatterChainTest extends TestCase
     public function testInvalidArrayOfAdapters(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this>$this->expectExceptionMessage('Adapter should be instance of Webuni\FrontMatter\FrontMatterInterface');
+        $this->expectExceptionMessage('Adapter should be instance of '.FrontMatterInterface::class);
 
         new FrontMatterChain([new ArrayObject()]);
     }
@@ -49,7 +50,7 @@ final class FrontMatterChainTest extends TestCase
     /**
      * @dataProvider getFrontMatter
      */
-    public function testExists($source): void
+    public function testExists(string $source): void
     {
         self::assertTrue($this->chain->exists($source));
     }
@@ -57,14 +58,14 @@ final class FrontMatterChainTest extends TestCase
     /**
      * @dataProvider getFrontMatter
      */
-    public function testParse($source, $data, $content): void
+    public function testParse(string $source, array $data, string $content): void
     {
         $document = $this->chain->parse($source);
         self::assertEquals($data, $document->getData());
         self::assertEquals($content, $document->getContent());
     }
 
-    public function getFrontMatter(): array
+    public static function getFrontMatter(): array
     {
         return [
             ["---\nfoo: bar\n---\nContent", ['foo' => 'bar'], 'Content'],

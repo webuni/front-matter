@@ -28,7 +28,7 @@ task_composer__normalize()( composer normalize "$@" )
 
 # Run tests
 # @service php
-task_tests()( "$(__fn phpunit-8 && echo "phpunit-8" || echo "phpunit")" --colors=always "$@" )
+task_tests()( phpunit --colors=always "$@" )
 
 # Fix code style
 # @service php

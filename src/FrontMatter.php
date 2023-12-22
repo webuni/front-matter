@@ -19,17 +19,10 @@ use Webuni\FrontMatter\Processor\YamlProcessor;
 
 final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterface
 {
-    /** @var string */
-    private $startSep;
-
-    /** @var string */
-    private $endSep;
-
-    /** @var ProcessorInterface */
-    private $processor;
-
-    /** @var string */
-    private $regexp;
+    private string $startSep;
+    private string $endSep;
+    private ProcessorInterface $processor;
+    private string $regexp;
 
     public static function createYaml(): self
     {
@@ -101,7 +94,7 @@ final class FrontMatter implements FrontMatterInterface, FrontMatterExistsInterf
             return trim($string);
         }
 
-        return trim(preg_replace("/^$indent/m", '', $string));
+        return trim((string) preg_replace("/^$indent/m", '', $string));
     }
 
     private function revealIndention(string $string): string

@@ -25,7 +25,7 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getYaml
      */
-    public function testYaml($string, $data, $content, bool $hasFrontMatter): void
+    public function testYaml(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter();
         $document = $frontMatter->parse($string);
@@ -38,7 +38,7 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getSeparator
      */
-    public function testYamlWithCustomSeparator($string, $data, $content, bool $hasFrontMatter): void
+    public function testYamlWithCustomSeparator(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(null, '<!--', '-->');
         $document = $frontMatter->parse($string);
@@ -51,7 +51,7 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getJson
      */
-    public function testJson($string, $data, $content, bool $hasFrontMatter): void
+    public function testJson(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new JsonProcessor());
         $document = $frontMatter->parse($string);
@@ -64,7 +64,7 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getPlainJson
      */
-    public function testPlainJson($string, $data, $content, bool $hasFrontMatter): void
+    public function testPlainJson(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new JsonWithoutBracesProcessor(), '{', '}');
         $document = $frontMatter->parse($string);
@@ -77,7 +77,7 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getYaml
      */
-    public function testNeon($string, $data, $content, bool $hasFrontMatter): void
+    public function testNeon(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new NeonProcessor());
         $document = $frontMatter->parse($string);
@@ -90,7 +90,7 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getToml
      */
-    public function testToml($string, $data, $content, bool $hasFrontMatter): void
+    public function testToml(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new TomlProcessor());
         $document = $frontMatter->parse($string);
@@ -104,7 +104,7 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
-    public function getYaml(): array
+    public static function getYaml(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -113,7 +113,7 @@ final class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getSeparator(): array
+    public static function getSeparator(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -122,7 +122,7 @@ final class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getJson(): array
+    public static function getJson(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -131,7 +131,7 @@ final class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getPlainJson(): array
+    public static function getPlainJson(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -140,7 +140,7 @@ final class FrontMatterTest extends TestCase
         ];
     }
 
-    public function getToml(): array
+    public static function getToml(): array
     {
         return [
             ['foo', [], 'foo', false],
@@ -149,7 +149,7 @@ final class FrontMatterTest extends TestCase
         ];
     }
 
-    private static function assertDocument($data, $content, Document $document): void
+    private static function assertDocument(array $data, string $content, Document $document): void
     {
         self::assertEquals($data, $document->getData());
         self::assertEquals($content, $document->getContent());

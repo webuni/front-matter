@@ -12,19 +12,19 @@
 
 namespace Webuni\FrontMatter\Tests\Twig;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Twig\Loader\ExistsLoaderInterface;
 use Twig\Loader\LoaderInterface;
-use Twig\Loader\SourceContextLoaderInterface;
 use Twig\Source;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
 
 final class FrontMatterLoaderTest extends TestCase
 {
-    private $frontMatter;
-    private $originalLoader;
-    private $loader;
+    private FrontMatter $frontMatter;
+    /** @var MockObject&LoaderInterface */
+    private MockObject $originalLoader;
+    private FrontMatterLoader $loader;
 
     protected function setUp(): void
     {
@@ -72,7 +72,7 @@ final class FrontMatterLoaderTest extends TestCase
         self::assertEquals($content, $this->loader->getSourceContext($name)->getCode());
     }
 
-    public function getSource(): array
+    public static function getSource(): array
     {
         return [
             ["{{ foo }}", '{{ foo }}', []],

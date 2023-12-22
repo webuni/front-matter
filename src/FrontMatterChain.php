@@ -15,7 +15,7 @@ namespace Webuni\FrontMatter;
 final class FrontMatterChain implements FrontMatterInterface, FrontMatterExistsInterface
 {
     /** @var FrontMatterInterface[] */
-    private $adapters = [];
+    private array $adapters = [];
 
     public function __construct(iterable $adapters)
     {
