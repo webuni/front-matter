@@ -1,11 +1,10 @@
-version: '3.4'
-
 services:
   php:
-    image: "minidocks/php-tools:${PHP_VERSION:-8.1}"
+    image: "minidocks/php:${PHP_VERSION:-8.2}"
     volumes:
       - .:$PWD
       - ~/.composer/cache:/composer-cache
       - ~/.composer/auth.json:/composer/auth.json
+    environment:
+      PATH_SUFFIX: './vendor/bin'
     working_dir: $PWD
-    command: sshd
