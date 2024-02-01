@@ -45,7 +45,7 @@ final class FrontMatter implements FrontMatterInterface
         $this->endSep = $endSep;
         $this->processor = $processor ?: new YamlProcessor();
 
-        $this->regexp = '{^(?:'.preg_quote($startSep, null).")[\r\n|\n]*(.*?)[\r\n|\n]+(?:".preg_quote($endSep, null).")[\r\n|\n]*(.*)$}s";
+        $this->regexp = '{^(?:'.preg_quote($startSep).")[\r\n|\n]*(.*?)[\r\n|\n]+(?:".preg_quote($endSep).")[\r\n|\n]*(.*)$}s";
     }
 
     /**

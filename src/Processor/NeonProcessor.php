@@ -27,6 +27,6 @@ final class NeonProcessor implements ProcessorInterface
             return '';
         }
 
-        return (string) Neon::encode($data, Neon::BLOCK);
+        return Neon::encode($data, Neon::BLOCK);
     }
 }
