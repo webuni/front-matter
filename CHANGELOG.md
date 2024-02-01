@@ -7,6 +7,7 @@ CHANGELOG
 * Enable Symfony 7
 * Remove support for CommonMark 1
 * Integrate `exists` method into `FrontMatterInterface`
+* Add factory method `FrontMatterChain::create`
 
 1.5.0 (2022-12-12)
 ------------------

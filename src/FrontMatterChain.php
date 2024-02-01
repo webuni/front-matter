@@ -12,6 +12,9 @@
 
 namespace Webuni\FrontMatter;
 
+use Webuni\FrontMatter\Pug\PugCommentFrontMatter;
+use Webuni\FrontMatter\Twig\TwigCommentFrontMatter;
+
 final class FrontMatterChain implements FrontMatterInterface
 {
     /** @var FrontMatterInterface[] */
@@ -30,6 +33,18 @@ final class FrontMatterChain implements FrontMatterInterface
         if (empty($this->adapters)) {
             throw new \InvalidArgumentException('It is necessary add at least one front matter adapter '.FrontMatterInterface::class);
         }
+    }
+
+    public static function create(): self
+    {
+        return new self([
+            FrontMatter::createYaml(),
+            FrontMatter::createToml(),
+            TwigCommentFrontMatter::create(),
+            PugCommentFrontMatter::createWithEndComment(),
+            PugCommentFrontMatter::create(),
+            FrontMatter::createJson(),
+        ]);
     }
 
     public function exists(string $source): bool
