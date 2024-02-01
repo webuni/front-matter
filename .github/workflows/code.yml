@@ -10,20 +10,34 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        deps_strategy: [ latest, lowest ]
-        php: [ '7.4', '8.0', '8.1' ]
+        deps_strategy: [ '', '--prefer-lowest' ]
+        php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
+        symfony: [ ^3.0, ^4.0, ^5.0, ^6.0, ^7.0 ]
+        exclude:
+          - php: '7.4'
+            symfony: ^6.0
+          - php: '7.4'
+            symfony: ^7.0
+          - php: '8.0'
+            symfony: ^7.0
+          - php: '8.1'
+            symfony: ^7.0
     steps:
       - name: Update code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: pcov
+          tools: composer:v2
+
       - name: Install dependencies
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-        run: ./run deps:${{ matrix.deps_strategy }}
+        run: composer update ${{ matrix.deps_strategy }} --with symfony/yaml:${{ matrix.symfony }}
+
       - name: Code style
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-        run: ./run cs --dry-run
+        run: vendor/bin/php-cs-fixer fix --ansi --allow-risky=yes --dry-run
+
       - name: Code quality
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-        run: ./run analyse
+        run: vendor/bin/phpstan analyse --no-progress --ansi

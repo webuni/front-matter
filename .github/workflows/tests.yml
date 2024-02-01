@@ -10,20 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        deps_strategy: [ latest, lowest ]
-        php: [ '7.4', '8.0', '8.1' ]
-        symfony: [ ^3.0, ^4.0, ^5.0, ^6.0 ]
-        exclude:
-          - php: '7.4'
-            symfony: ^6.0
+        deps_strategy: [ '', '--prefer-lowest' ]
+        php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
     steps:
       - name: Update code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: pcov
+          tools: composer:v2
+
       - name: Install dependencies
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-        run: ./run deps:${{ matrix.deps_strategy }} ${{ matrix.symfony }}
+        run: composer update ${{ matrix.deps_strategy }}
+
       - name: Tests
-        env:
-          PHP_VERSION: ${{ matrix.php }}
-        run: ./run tests
+        run: vendor/bin/phpunit --colors=always
