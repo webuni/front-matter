@@ -19,6 +19,53 @@ This library can be installed via Composer:
 Usage
 -----
 
+This library can parse all form of front matter:
+
+<table>
+<thead><tr><th>YAML (Neon)</th><th>TOML</th><th>Json</th></tr></thead>
+<tbody><tr>
+<td>
+
+```markdown
+---
+foo: bar
+---
+
+# h1
+
+paragraph
+```
+
+</td>
+<td>
+
+```markdown
++++
+foo = bar
++++
+
+# h1
+
+paragraph
+```
+
+</td>
+<td>
+
+```markdown
+{
+  "foo": "bar"
+}
+
+# h1
+
+paragraph
+```
+
+</td>
+</tr></tbody>
+</table>
+
 ### Parse an arbitrary string
 
 ```php
@@ -95,8 +142,8 @@ Hello world!
 Available converters:
 
 | Converter                                 | Twig                                                       |
-| ----------------------------------------- | ---------------------------------------------------------- |
-| `DataToTwigConvertor::nothing()`          | ``                                                         |
+| ----------------------------------------- |------------------------------------------------------------|
+| `DataToTwigConvertor::nothing()`          |                                                            |
 | `DataToTwigConvertor::vars()`             | `{% set key1 = value1 %}`                                  |
 | `DataToTwigConvertor::vars(false)`        | `{% set key1 = key1 is defined ? key1 : value1 %}`         |
 | `DataToTwigConvertor::var('name')`        | `{% set name = {key1: value1, key2: value2} %}`            |
@@ -133,5 +180,6 @@ Alternatives
 ------------
 
 - https://github.com/spatie/yaml-front-matter
+- https://github.com/ergebnis/front-matter
 - https://github.com/mnapoli/FrontYAML
 - https://github.com/Modularr/YAML-FrontMatter
