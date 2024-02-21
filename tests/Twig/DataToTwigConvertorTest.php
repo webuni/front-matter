@@ -34,35 +34,21 @@ final class DataToTwigConvertorTest extends TestCase
     public function testVars(): void
     {
         $convertor = DataToTwigConvertor::vars();
-        $twig = '{% set foo = "bar" %}
-{% set number = 1234 %}
-{% set pi = 3.14159 %}
-{% set date = (1464307200|date_modify(\'0sec\')) %}
-{% set empty = null %}
-{% set multiline = "Multiple\nLine\nString\n" %}
-{% set object = {key: "value", datetime: (1605185652|date_modify(\'0sec\')), values: {0: "one", 1: "two", }, } %}
-';
+        $twig = file_get_contents(__DIR__.'/templates/vars.twig');
         self::assertEquals($twig, $convertor($this->data));
     }
 
     public function testOptionalVars(): void
     {
         $convertor = DataToTwigConvertor::vars(false);
-        $twig = '{% set foo = foo is defined ? foo : "bar" %}
-{% set number = number is defined ? number : 1234 %}
-{% set pi = pi is defined ? pi : 3.14159 %}
-{% set date = date is defined ? date : (1464307200|date_modify(\'0sec\')) %}
-{% set empty = empty is defined ? empty : null %}
-{% set multiline = multiline is defined ? multiline : "Multiple\nLine\nString\n" %}
-{% set object = object is defined ? object : {key: "value", datetime: (1605185652|date_modify(\'0sec\')), values: {0: "one", 1: "two", }, } %}
-';
+        $twig = file_get_contents(__DIR__.'/templates/optionalvars.twig');
         self::assertEquals($twig, $convertor($this->data));
     }
 
     public function testVar(): void
     {
         $convertor = DataToTwigConvertor::var('parameters');
-        $twig = '{% set parameters = {foo: "bar", number: 1234, pi: 3.14159, date: (1464307200|date_modify(\'0sec\')), empty: null, multiline: "Multiple\nLine\nString\n", object: {key: "value", datetime: (1605185652|date_modify(\'0sec\')), values: {0: "one", 1: "two", }, }, }%}'."\n";
+        $twig = file_get_contents(__DIR__.'/templates/var.twig');
         self::assertEquals($twig, $convertor($this->data));
     }
 }

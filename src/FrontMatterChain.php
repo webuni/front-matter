@@ -12,6 +12,7 @@
 
 namespace Webuni\FrontMatter;
 
+use InvalidArgumentException;
 use Webuni\FrontMatter\Pug\PugCommentFrontMatter;
 use Webuni\FrontMatter\Twig\TwigCommentFrontMatter;
 
@@ -24,14 +25,16 @@ final class FrontMatterChain implements FrontMatterInterface
     {
         foreach ($adapters as $adapter) {
             if (!$adapter instanceof FrontMatterInterface) {
-                throw new \InvalidArgumentException('Adapter should be instance of '.FrontMatterInterface::class);
+                throw new InvalidArgumentException('Adapter should be instance of '.FrontMatterInterface::class);
             }
 
             $this->adapters[] = $adapter;
         }
 
         if (empty($this->adapters)) {
-            throw new \InvalidArgumentException('It is necessary add at least one front matter adapter '.FrontMatterInterface::class);
+            throw new InvalidArgumentException(
+                'It is necessary add at least one front matter adapter '.FrontMatterInterface::class
+            );
         }
     }
 

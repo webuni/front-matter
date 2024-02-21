@@ -12,6 +12,8 @@
 
 namespace Webuni\FrontMatter\Twig;
 
+use DateTimeInterface;
+
 class DataToTwigConvertor
 {
     /** @var callable */
@@ -23,7 +25,6 @@ class DataToTwigConvertor
 
         return (string) $convertor($data);
     }
-
 
     protected function __construct(callable $convertor)
     {
@@ -37,7 +38,7 @@ class DataToTwigConvertor
      */
     public static function nothing(): self
     {
-        return new self(function (array $data) {
+        return new self(function () {
             return '';
         });
     }
@@ -55,7 +56,9 @@ class DataToTwigConvertor
                 if (is_int($key)) {
                     continue;
                 }
-                $content .= "{% set $key = " . ($force ? '' : "$key is defined ? $key : ") . self::valueToTwig($value) . " %}\n";
+
+                $value = ($force ? '' : "$key is defined ? $key : ") . self::valueToTwig($value);
+                $content .= "{% set {$key} = {$value} %}\n";
             }
 
             return $content;
@@ -72,7 +75,9 @@ class DataToTwigConvertor
     public static function var(string $name, bool $force = true): self
     {
         return new self(function (array $data) use ($name, $force) {
-            return "{% set $name = " . ($force ? '' : "$name is defined ? $name : ") . self::valueToTwig($data) . "%}\n";
+            $value = ($force ? '' : "$name is defined ? $name : ") . self::valueToTwig($data);
+
+            return "{% set {$name} = {$value} %}\n";
         });
     }
 
@@ -83,7 +88,7 @@ class DataToTwigConvertor
      */
     protected static function valueToTwig($value): string
     {
-        if ($value instanceof \DateTimeInterface) {
+        if ($value instanceof DateTimeInterface) {
             return '(' . $value->getTimestamp() . "|date_modify('0sec'))";
         }
 

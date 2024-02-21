@@ -2,9 +2,9 @@ Front Matter
 ============
 
 [![Packagist](https://img.shields.io/packagist/v/webuni/front-matter.svg?style=flat-square)](https://packagist.org/packages/webuni/front-matter)
-[![Build Status](https://img.shields.io/github/workflow/status/webuni/front-matter/Tests/master.svg?style=flat-square)](https://github.com/webuni/front-matter/actions?query=workflow%3ATests+branch%3Amaster)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/webuni/front-matter?style=flat-square)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/webuni/front-matter?style=flat-square)](https://scrutinizer-ci.com/g/webuni/front-matter/?branch=master)
+[![Build Status](https://img.shields.io/github/workflow/status/webuni/front-matter/Tests/main.svg?style=flat-square)](https://github.com/webuni/front-matter/actions?query=workflow%3ATests+branch%3Amain)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=webuni_front-matter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=webuni_front-matter)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=webuni_front-matter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=webuni_front-matter)
 
 The most universal Front matter (yaml, json, neon, toml) parser and dumper for PHP.
 Front matter allows page-specific variables to be included at the top of a page.

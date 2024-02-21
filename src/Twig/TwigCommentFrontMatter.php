@@ -23,6 +23,7 @@ final class TwigCommentFrontMatter
 {
     private function __construct()
     {
+        // prevent any instantiation
     }
 
     public static function create(ProcessorInterface $processor = null): FrontMatter

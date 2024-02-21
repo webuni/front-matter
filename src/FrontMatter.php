@@ -44,8 +44,7 @@ final class FrontMatter implements FrontMatterInterface
         $this->startSep = $startSep;
         $this->endSep = $endSep;
         $this->processor = $processor ?: new YamlProcessor();
-
-        $this->regexp = '{^(?:'.preg_quote($startSep).")[\r\n|\n]*(.*?)[\r\n|\n]+(?:".preg_quote($endSep).")[\r\n|\n]*(.*)$}s";
+        $this->regexp = $this->getRegExp($startSep, $endSep);
     }
 
     /**
@@ -110,5 +109,14 @@ final class FrontMatter implements FrontMatterInterface
         }
 
         return '';
+    }
+
+    private function getRegExp(string $startSep, string $endSep): string
+    {
+        $startSepQuoted = preg_quote($startSep);
+        $endSepQuoted = preg_quote($endSep);
+        $newline = '[\r\n|\n]';
+
+        return "{^(?:{$startSepQuoted}){$newline}*(.*?){$newline}+(?:{$endSepQuoted}){$newline}*(.*)$}s";
     }
 }

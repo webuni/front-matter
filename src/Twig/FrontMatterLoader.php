@@ -27,7 +27,11 @@ class FrontMatterLoader implements LoaderInterface
     /** @var DataToTwigConvertor */
     private $convertor;
 
-    public function __construct(FrontMatterInterface $parser, LoaderInterface $loader, DataToTwigConvertor $convertor = null)
+    public function __construct(
+        FrontMatterInterface $parser,
+        LoaderInterface $loader,
+        DataToTwigConvertor $convertor = null
+    )
     {
         $this->loader = $loader;
         $this->parser = $parser;

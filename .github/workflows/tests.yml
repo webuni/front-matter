@@ -20,11 +20,16 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: pcov
+          coverage: xdebug
           tools: composer:v2
 
       - name: Install dependencies
         run: composer update ${{ matrix.deps_strategy }}
 
       - name: Tests
-        run: vendor/bin/phpunit --colors=always
+        run: vendor/bin/phpunit --colors=always --coverage-clover=coverage.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

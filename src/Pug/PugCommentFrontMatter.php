@@ -23,6 +23,7 @@ final class PugCommentFrontMatter
 {
     private function __construct()
     {
+        // prevent any instantiation
     }
 
     public static function createWithEndComment(ProcessorInterface $processor = null): FrontMatter

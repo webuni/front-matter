@@ -34,7 +34,9 @@ final class FrontMatterChainTest extends TestCase
     public function testEmptyAdapters(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('It is necessary add at least one front matter adapter '.FrontMatterInterface::class);
+        $this->expectExceptionMessage(
+            'It is necessary add at least one front matter adapter '.FrontMatterInterface::class
+        );
 
         new FrontMatterChain([]);
     }

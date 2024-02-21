@@ -38,7 +38,12 @@ final class FrontMatterTest extends TestCase
     /**
      * @dataProvider getSeparator
      */
-    public function testYamlWithCustomSeparator(string $string, array $data, string $content, bool $hasFrontMatter): void
+    public function testYamlWithCustomSeparator(
+        string $string,
+        array $data,
+        string $content,
+        bool $hasFrontMatter
+    ): void
     {
         $frontMatter = new FrontMatter(null, '<!--', '-->');
         $document = $frontMatter->parse($string);

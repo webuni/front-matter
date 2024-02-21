@@ -33,7 +33,7 @@
         "league/commonmark": "^2.0",
         "mthaml/mthaml": "^1.3",
         "nette/neon": "^2.2 || ^3.0",
-        "phpunit/phpunit": "^9 || ^10",
+        "phpunit/phpunit": "^9.6",
         "phpstan/phpstan": "^1.10",
         "twig/twig": "^3.0",
         "yosymfony/toml": "^1.0"
