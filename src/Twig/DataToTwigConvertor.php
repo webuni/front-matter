@@ -54,6 +54,7 @@ class DataToTwigConvertor
             $content = '';
             foreach ($data as $key => $value) {
                 if (is_int($key)) {
+                    //TODO add log
                     continue;
                 }
 

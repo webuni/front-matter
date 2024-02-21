@@ -21,6 +21,9 @@ use Webuni\FrontMatter\Processor\YamlProcessor;
  */
 final class PugCommentFrontMatter
 {
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
         // prevent any instantiation

@@ -35,6 +35,22 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
+    public function testIndentedYaml(): void
+    {
+        $frontMatter = new FrontMatter();
+        $document = $frontMatter->parse("---\n\n\n  \n  foo: bar\n  text: |\n    text\n\n---\nContent");
+
+        self::assertDocument(['foo' => 'bar', 'text' => 'text'], 'Content', $document);
+    }
+
+    public function testEmptyYaml(): void
+    {
+        $frontMatter = new FrontMatter();
+        $document = $frontMatter->parse("---\n\n\n  \n    \n\n---\nContent");
+
+        self::assertDocument([], 'Content', $document);
+    }
+
     /**
      * @dataProvider getSeparator
      */

@@ -15,6 +15,7 @@ namespace Webuni\FrontMatter\Tests;
 use ArrayObject;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\FrontMatterChain;
 use Webuni\FrontMatter\FrontMatterInterface;
@@ -25,10 +26,7 @@ final class FrontMatterChainTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->chain = new FrontMatterChain([
-            FrontMatter::createYaml(),
-            FrontMatter::createJson(),
-        ]);
+        $this->chain = FrontMatterChain::create();
     }
 
     public function testEmptyAdapters(): void
@@ -52,9 +50,9 @@ final class FrontMatterChainTest extends TestCase
     /**
      * @dataProvider getFrontMatter
      */
-    public function testExists(string $source): void
+    public function testExists(string $source, array $data, string $content, bool $exists): void
     {
-        self::assertTrue($this->chain->exists($source));
+        self::assertSame($exists, $this->chain->exists($source));
     }
 
     /**
@@ -67,11 +65,18 @@ final class FrontMatterChainTest extends TestCase
         self::assertEquals($content, $document->getContent());
     }
 
+    public function testDumpViaFirstAdapter(): void
+    {
+        $source = $this->chain->dump(new Document('Content', ['foo' => 'bar']));
+        $this->assertSame("---\nfoo: bar\n---\nContent", $source);
+    }
+
     public static function getFrontMatter(): array
     {
         return [
-            ["---\nfoo: bar\n---\nContent", ['foo' => 'bar'], 'Content'],
-            ["{\n  \"foo\": \"bar\"\n}\nContent", ['foo' => 'bar'], 'Content'],
+            ["Content", [], 'Content', false],
+            ["---\nfoo: bar\n---\nContent", ['foo' => 'bar'], 'Content', true],
+            ["{\n  \"foo\": \"bar\"\n}\nContent", ['foo' => 'bar'], 'Content', true],
         ];
     }
 }

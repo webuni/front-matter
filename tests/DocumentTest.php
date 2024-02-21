@@ -23,6 +23,12 @@ final class DocumentTest extends TestCase
         self::assertEquals($content, $document->getContent());
     }
 
+    public function testToString(): void
+    {
+        $document = new Document($content = 'content');
+        self::assertEquals($content, (string) $document);
+    }
+
     public function testReturnData(): void
     {
         $document = new Document('content', $data = ['foo' => 'bar']);

@@ -1,4 +1,5 @@
 foo: bar
+1: number
 number: 1234
 pi: 3.14159
 date: 2016-05-27
