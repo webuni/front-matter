@@ -1,8 +1,9 @@
 name: Tests
 
 on:
-  push: ~
-  pull_request: ~
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   phpunit:
@@ -14,7 +15,7 @@ jobs:
         php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
     steps:
       - name: Update code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -27,9 +28,4 @@ jobs:
         run: composer update ${{ matrix.deps_strategy }}
 
       - name: Tests
-        run: vendor/bin/phpunit --colors=always --coverage-clover=coverage.xml
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: vendor/bin/phpunit --colors=always
