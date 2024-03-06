@@ -18,10 +18,12 @@ This library can be installed via Composer:
 Usage
 -----
 
+### Automatic front matter detection and parsing
+
 This library can parse all form of front matter:
 
 <table>
-<thead><tr><th>YAML (Neon)</th><th>TOML</th><th>Json</th></tr></thead>
+<thead><tr><th>YAML (Neon)</th><th>TOML</th><th>Twig</th><th>Pug</th><th>Json</th></tr></thead>
 <tbody><tr>
 <td>
 
@@ -30,9 +32,9 @@ This library can parse all form of front matter:
 foo: bar
 ---
 
-# h1
+# Section
 
-paragraph
+Text
 ```
 
 </td>
@@ -43,9 +45,34 @@ paragraph
 foo = bar
 +++
 
-# h1
+# Section
 
-paragraph
+Text
+```
+
+</td>
+<td>
+
+```markdown
+{#---
+foo: bar
+---#}
+
+<h1>Section</h1>
+
+<p>{{ foo }}</p>
+```
+
+</td>
+<td>
+
+```markdown
+--
+  foo: bar
+
+h1 Section
+
+p= foo
 ```
 
 </td>
@@ -56,14 +83,26 @@ paragraph
   "foo": "bar"
 }
 
-# h1
+# Section
 
-paragraph
+Text
 ```
 
 </td>
 </tr></tbody>
 </table>
+
+The following code will automatically detect the above front matter types:
+
+```php
+<?php
+
+$frontMatter = \Webuni\FrontMatter\FrontMatterChain::create();
+$document = $frontMatter->parse($string);
+
+$data = $document->getData();
+$content = $document->getContent();
+```
 
 ### Parse an arbitrary string
 
