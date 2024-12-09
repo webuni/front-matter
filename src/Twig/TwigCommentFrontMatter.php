@@ -29,7 +29,7 @@ final class TwigCommentFrontMatter
         // prevent any instantiation
     }
 
-    public static function create(ProcessorInterface $processor = null): FrontMatter
+    public static function create(?ProcessorInterface $processor = null): FrontMatter
     {
         return new FrontMatter($processor ?? new YamlProcessor(), '{#---', '---#}');
     }

@@ -30,7 +30,7 @@ class FrontMatterLoader implements LoaderInterface
     public function __construct(
         FrontMatterInterface $parser,
         LoaderInterface $loader,
-        DataToTwigConvertor $convertor = null
+        ?DataToTwigConvertor $convertor = null
     )
     {
         $this->loader = $loader;
