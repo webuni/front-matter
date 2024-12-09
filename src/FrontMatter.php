@@ -39,7 +39,7 @@ final class FrontMatter implements FrontMatterInterface
         return new self(new JsonWithoutBracesProcessor(), '{', '}');
     }
 
-    public function __construct(ProcessorInterface $processor = null, string $startSep = '---', string $endSep = '---')
+    public function __construct(?ProcessorInterface $processor = null, string $startSep = '---', string $endSep = '---')
     {
         $this->startSep = $startSep;
         $this->endSep = $endSep;

@@ -29,12 +29,12 @@ final class PugCommentFrontMatter
         // prevent any instantiation
     }
 
-    public static function createWithEndComment(ProcessorInterface $processor = null): FrontMatter
+    public static function createWithEndComment(?ProcessorInterface $processor = null): FrontMatter
     {
         return new FrontMatter($processor ?? new YamlProcessor(), '//-', '//-');
     }
 
-    public static function create(ProcessorInterface $processor = null): FrontMatter
+    public static function create(?ProcessorInterface $processor = null): FrontMatter
     {
         return new FrontMatter($processor ?? new YamlProcessor(), '//-', "\n");
     }
