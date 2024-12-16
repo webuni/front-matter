@@ -21,13 +21,17 @@ class Document
     private $data;
 
     /**
-     * @param string $content
      * @param array<string, mixed> $data
      */
     public function __construct(string $content = '', array $data = [])
     {
         $this->content = $content;
         $this->data = $data;
+    }
+
+    public function __toString(): string
+    {
+        return $this->content;
     }
 
     public function getContent(): string
@@ -57,6 +61,7 @@ class Document
 
     /**
      * @param array<string, mixed> $data
+     *
      * @return $this
      */
     public function setData(array $data): self
@@ -64,10 +69,5 @@ class Document
         $this->data = $data;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->content;
     }
 }

@@ -24,6 +24,14 @@ final class FrontMatter implements FrontMatterInterface
     private ProcessorInterface $processor;
     private string $regexp;
 
+    public function __construct(?ProcessorInterface $processor = null, string $startSep = '---', string $endSep = '---')
+    {
+        $this->startSep = $startSep;
+        $this->endSep = $endSep;
+        $this->processor = $processor ?: new YamlProcessor();
+        $this->regexp = $this->getRegExp($startSep, $endSep);
+    }
+
     public static function createYaml(): self
     {
         return new self(new YamlProcessor(), '---', '---');
@@ -39,20 +47,9 @@ final class FrontMatter implements FrontMatterInterface
         return new self(new JsonWithoutBracesProcessor(), '{', '}');
     }
 
-    public function __construct(?ProcessorInterface $processor = null, string $startSep = '---', string $endSep = '---')
-    {
-        $this->startSep = $startSep;
-        $this->endSep = $endSep;
-        $this->processor = $processor ?: new YamlProcessor();
-        $this->regexp = $this->getRegExp($startSep, $endSep);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function parse(string $source): Document
     {
-        if (preg_match($this->regexp, $source, $matches) !== 1) {
+        if (1 !== preg_match($this->regexp, $source, $matches)) {
             return new Document($source);
         }
 
@@ -64,9 +61,6 @@ final class FrontMatter implements FrontMatterInterface
         return new Document($matches[2], $data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dump(Document $document): string
     {
         $data = trim($this->processor->dump($document->getData()));
@@ -77,12 +71,9 @@ final class FrontMatter implements FrontMatterInterface
         return sprintf("%s\n%s\n%s\n%s", $this->startSep, $data, $this->endSep, $document->getContent());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function exists(string $source): bool
     {
-        return preg_match($this->regexp, $source) === 1;
+        return 1 === preg_match($this->regexp, $source);
     }
 
     private function cancelIndentation(string $string): string
@@ -93,16 +84,17 @@ final class FrontMatter implements FrontMatterInterface
             return trim($string);
         }
 
-        return trim((string) preg_replace("/^$indent/m", '', $string));
+        return trim((string) preg_replace("/^{$indent}/m", '', $string));
     }
 
     private function revealIndention(string $string): string
     {
         $separator = "\r\n";
         $line = strtok($string, $separator);
-        while ($line !== false) {
-            if (trim($line) !== '') {
+        while (false !== $line) {
+            if ('' !== trim($line)) {
                 preg_match('/^(\s+)/', $line, $match);
+
                 return $match[1] ?? '';
             }
             $line = strtok($separator);

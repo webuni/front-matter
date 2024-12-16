@@ -16,13 +16,16 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Webuni\FrontMatter\Twig\DataToTwigConvertor;
 
+/**
+ * @internal
+ */
 final class DataToTwigConvertorTest extends TestCase
 {
     private array $data;
 
     protected function setUp(): void
     {
-        $this->data = Yaml::parse((string) file_get_contents(__DIR__.'/data.yaml'), Yaml::PARSE_DATETIME);
+        $this->data = (array) Yaml::parse((string) file_get_contents(__DIR__.'/data.yaml'), Yaml::PARSE_DATETIME);
     }
 
     public function testNothing(): void

@@ -12,12 +12,15 @@
 
 namespace Webuni\FrontMatter\Twig;
 
-use DateTimeInterface;
-
 class DataToTwigConvertor
 {
-    /** @var callable */
+    /** @var callable(array): string */
     private $convertor;
+
+    protected function __construct(callable $convertor)
+    {
+        $this->convertor = $convertor;
+    }
 
     public function __invoke(array $data): string
     {
@@ -26,39 +29,32 @@ class DataToTwigConvertor
         return (string) $convertor($data);
     }
 
-    protected function __construct(callable $convertor)
-    {
-        $this->convertor = $convertor;
-    }
-
     /**
-     * Data will not be written to the twig template
-     *
-     * @return self
+     * Data will not be written to the twig template.
      */
     public static function nothing(): self
     {
-        return new self(function () {
+        return new self(static function (): string {
             return '';
         });
     }
 
     /**
      * @psalm-suppress MixedAssignment
+     *
      * @param bool $force Define the value of the variable even if it is passed to the template
-     * @return self
      */
     public static function vars(bool $force = true): self
     {
-        return new self(function (array $data) use ($force) {
+        return new self(static function (array $data) use ($force): string {
             $content = '';
             foreach ($data as $key => $value) {
                 if (is_int($key)) {
-                    //TODO add log
+                    // TODO add log
                     continue;
                 }
 
-                $value = ($force ? '' : "$key is defined ? $key : ") . self::valueToTwig($value);
+                $value = ($force ? '' : "{$key} is defined ? {$key} : ").self::valueToTwig($value);
                 $content .= "{% set {$key} = {$value} %}\n";
             }
 
@@ -67,16 +63,15 @@ class DataToTwigConvertor
     }
 
     /**
-     * Converts data to one twig variable
+     * Converts data to one twig variable.
      *
      * @param string $name  Variable name
      * @param bool   $force Define the value of the variable even if it is passed to the template
-     * @return self
      */
     public static function var(string $name, bool $force = true): self
     {
-        return new self(function (array $data) use ($name, $force) {
-            $value = ($force ? '' : "$name is defined ? $name : ") . self::valueToTwig($data);
+        return new self(static function (array $data) use ($name, $force): string {
+            $value = ($force ? '' : "{$name} is defined ? {$name} : ").self::valueToTwig($data);
 
             return "{% set {$name} = {$value} %}\n";
         });
@@ -84,21 +79,22 @@ class DataToTwigConvertor
 
     /**
      * @psalm-suppress MixedAssignment
+     *
      * @param mixed $value
-     * @return string
      */
     protected static function valueToTwig($value): string
     {
-        if ($value instanceof DateTimeInterface) {
-            return '(' . $value->getTimestamp() . "|date_modify('0sec'))";
+        if ($value instanceof \DateTimeInterface) {
+            return '('.$value->getTimestamp()."|date_modify('0sec'))";
         }
 
         if (is_array($value)) {
             $twig = '{';
             foreach ($value as $key => $val) {
-                $twig .= "$key: ".static::valueToTwig($val).", ";
+                $twig .= "{$key}: ".static::valueToTwig($val).', ';
             }
-            return $twig."}";
+
+            return $twig.'}';
         }
 
         return (string) json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

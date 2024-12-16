@@ -31,8 +31,7 @@ class FrontMatterLoader implements LoaderInterface
         FrontMatterInterface $parser,
         LoaderInterface $loader,
         ?DataToTwigConvertor $convertor = null
-    )
-    {
+    ) {
         $this->loader = $loader;
         $this->parser = $parser;
         $this->convertor = $convertor ?? DataToTwigConvertor::nothing();
@@ -66,7 +65,7 @@ class FrontMatterLoader implements LoaderInterface
 
         $content = ($this->convertor)($document->getData()).$content;
 
-        $lines = substr_count($code, "\n", 0, - strlen($content));
+        $lines = substr_count($code, "\n", 0, -strlen($content));
         $content = str_repeat("\n", $lines + 1).$content;
 
         return new Source($content, $source->getName(), $source->getPath());

@@ -2,6 +2,7 @@
 .phpunit.result.cache
 .runner
 composer.lock
+coverage/
 phpstan.neon
 phpunit.xml
 psalm.xml

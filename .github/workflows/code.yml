@@ -12,15 +12,9 @@ jobs:
     strategy:
       matrix:
         deps_strategy: [ '', '--prefer-lowest' ]
-        php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
+        php: [ '8.1', '8.2', '8.3', '8.4' ]
         symfony: [ ^3.0, ^4.0, ^5.0, ^6.0, ^7.0 ]
         exclude:
-          - php: '7.4'
-            symfony: ^6.0
-          - php: '7.4'
-            symfony: ^7.0
-          - php: '8.0'
-            symfony: ^7.0
           - php: '8.1'
             symfony: ^7.0
     steps:
@@ -31,7 +25,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: pcov
           tools: composer:v2
 
       - name: Install dependencies
@@ -39,6 +32,8 @@ jobs:
 
       - name: Code style
         run: vendor/bin/php-cs-fixer fix --ansi --allow-risky=yes --dry-run
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
 
       - name: Code quality
         run: vendor/bin/phpstan analyse --no-progress --ansi

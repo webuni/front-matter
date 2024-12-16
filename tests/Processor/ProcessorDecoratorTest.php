@@ -17,6 +17,9 @@ use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Processor\ProcessorDecorator;
 use Webuni\FrontMatter\Processor\ProcessorInterface;
 
+/**
+ * @internal
+ */
 final class ProcessorDecoratorTest extends TestCase
 {
     private MockObject $wrapped;
@@ -41,6 +44,4 @@ final class ProcessorDecoratorTest extends TestCase
     }
 }
 
-final class DummyProcessorDecorator extends ProcessorDecorator
-{
-}
+final class DummyProcessorDecorator extends ProcessorDecorator {}

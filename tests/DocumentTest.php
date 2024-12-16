@@ -15,6 +15,9 @@ namespace Webuni\FrontMatter\Tests;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
 
+/**
+ * @internal
+ */
 final class DocumentTest extends TestCase
 {
     public function testReturnContent(): void

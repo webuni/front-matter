@@ -16,6 +16,9 @@ use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Twig\TwigCommentFrontMatter;
 
+/**
+ * @internal
+ */
 final class TwigCommentFrontMatterTest extends TestCase
 {
     public function testCreate(): void

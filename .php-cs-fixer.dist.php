@@ -12,10 +12,14 @@ EOF;
 
 return (new PhpCsFixer\Config())
     ->setRules([
+        '@PhpCsFixer' => true,
         '@PSR12:risky' => true,
+        '@PHP84Migration' => true,
         'header_comment' => [
             'header' => $header,
         ],
+        'php_unit_attributes' => true,
+        'php_unit_test_class_requires_covers' => false,
     ])
     ->setLineEnding("\n")
     ->setUsingCache(false)

@@ -12,14 +12,15 @@
 
 namespace Webuni\FrontMatter\Tests;
 
-use ArrayObject;
-use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
-use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\FrontMatterChain;
 use Webuni\FrontMatter\FrontMatterInterface;
 
+/**
+ * @internal
+ */
 final class FrontMatterChainTest extends TestCase
 {
     private FrontMatterChain $chain;
@@ -31,7 +32,7 @@ final class FrontMatterChainTest extends TestCase
 
     public function testEmptyAdapters(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'It is necessary add at least one front matter adapter '.FrontMatterInterface::class
         );
@@ -41,23 +42,19 @@ final class FrontMatterChainTest extends TestCase
 
     public function testInvalidArrayOfAdapters(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Adapter should be instance of '.FrontMatterInterface::class);
 
-        new FrontMatterChain([new ArrayObject()]);
+        new FrontMatterChain([new \ArrayObject()]);
     }
 
-    /**
-     * @dataProvider getFrontMatter
-     */
+    #[DataProvider('getFrontMatter')]
     public function testExists(string $source, array $data, string $content, bool $exists): void
     {
         self::assertSame($exists, $this->chain->exists($source));
     }
 
-    /**
-     * @dataProvider getFrontMatter
-     */
+    #[DataProvider('getFrontMatter')]
     public function testParse(string $source, array $data, string $content): void
     {
         $document = $this->chain->parse($source);
@@ -74,7 +71,7 @@ final class FrontMatterChainTest extends TestCase
     public static function getFrontMatter(): array
     {
         return [
-            ["Content", [], 'Content', false],
+            ['Content', [], 'Content', false],
             ["---\nfoo: bar\n---\nContent", ['foo' => 'bar'], 'Content', true],
             ["{\n  \"foo\": \"bar\"\n}\nContent", ['foo' => 'bar'], 'Content', true],
         ];

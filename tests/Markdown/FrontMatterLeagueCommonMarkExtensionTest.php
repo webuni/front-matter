@@ -12,16 +12,18 @@
 
 namespace Webuni\FrontMatter\Tests\Markdown;
 
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment as Environment1;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use League\CommonMark\Renderer\HtmlRenderer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Markdown\FrontMatterLeagueCommonMarkExtension;
 
+/**
+ * @internal
+ */
 final class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
 {
     private Environment $environment;
@@ -36,9 +38,7 @@ final class FrontMatterLeagueCommonMarkExtensionTest extends TestCase
         $this->environment = $environment;
     }
 
-    /**
-     * @dataProvider getData
-     */
+    #[DataProvider('getData')]
     public function testConvert(string $markdown, string $html, array $data): void
     {
         $parser = new MarkdownParser($this->environment);

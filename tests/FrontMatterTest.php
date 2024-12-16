@@ -12,6 +12,7 @@
 
 namespace Webuni\FrontMatter\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
 use Webuni\FrontMatter\FrontMatter;
@@ -20,11 +21,12 @@ use Webuni\FrontMatter\Processor\JsonWithoutBracesProcessor;
 use Webuni\FrontMatter\Processor\NeonProcessor;
 use Webuni\FrontMatter\Processor\TomlProcessor;
 
+/**
+ * @internal
+ */
 final class FrontMatterTest extends TestCase
 {
-    /**
-     * @dataProvider getYaml
-     */
+    #[DataProvider('getYaml')]
     public function testYaml(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter();
@@ -51,16 +53,13 @@ final class FrontMatterTest extends TestCase
         self::assertDocument([], 'Content', $document);
     }
 
-    /**
-     * @dataProvider getSeparator
-     */
+    #[DataProvider('getSeparator')]
     public function testYamlWithCustomSeparator(
         string $string,
         array $data,
         string $content,
         bool $hasFrontMatter
-    ): void
-    {
+    ): void {
         $frontMatter = new FrontMatter(null, '<!--', '-->');
         $document = $frontMatter->parse($string);
 
@@ -69,9 +68,7 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
-    /**
-     * @dataProvider getJson
-     */
+    #[DataProvider('getJson')]
     public function testJson(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new JsonProcessor());
@@ -82,9 +79,7 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
-    /**
-     * @dataProvider getPlainJson
-     */
+    #[DataProvider('getPlainJson')]
     public function testPlainJson(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new JsonWithoutBracesProcessor(), '{', '}');
@@ -95,9 +90,7 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
-    /**
-     * @dataProvider getYaml
-     */
+    #[DataProvider('getYaml')]
     public function testNeon(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new NeonProcessor());
@@ -108,9 +101,7 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
-    /**
-     * @dataProvider getToml
-     */
+    #[DataProvider('getToml')]
     public function testToml(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
         $frontMatter = new FrontMatter(new TomlProcessor());

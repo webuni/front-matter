@@ -28,11 +28,11 @@ task_composer__normalize()( composer normalize "$@" )
 
 # Run tests
 # @service php
-task_tests()( phpunit --colors=always "$@" )
+task_tests()( XDEBUG_MODE=coverage phpunit --colors=always --coverage-text --coverage-html coverage/html "$@" )
 
 # Fix code style
 # @service php
-task_cs()( php-cs-fixer fix --ansi --allow-risky=yes "$@" )
+task_cs()( PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --ansi --allow-risky=yes "$@" )
 
 # Analyse code
 # @service php
@@ -44,3 +44,7 @@ task_clean()( _docker_compose down --remove-orphans "$@" )
 # Run shell with tools
 # @service php
 task_tools()( sh "$@" )
+
+task_act__tests__latest()(
+  act -j phpunit --matrix php:8.4 --matrix deps_strategy:
+)
