@@ -12,10 +12,15 @@
 
 namespace Webuni\FrontMatter\Tests\Twig;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Twig\TwigCommentFrontMatter;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 final class TwigCommentFrontMatterTest extends TestCase
 {
     public function testCreate(): void

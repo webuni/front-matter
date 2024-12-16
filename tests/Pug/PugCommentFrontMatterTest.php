@@ -12,10 +12,15 @@
 
 namespace Pug;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Pug\PugCommentFrontMatter;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 final class PugCommentFrontMatterTest extends TestCase
 {
     public function testCreate(): void

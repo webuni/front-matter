@@ -18,8 +18,6 @@ interface ProcessorInterface
      * Parses front matter string into a data.
      *
      * @param string $string The string
-     *
-     * @return array
      */
     public function parse(string $string): array;
 
@@ -27,8 +25,6 @@ interface ProcessorInterface
      * Dumps a data to a string.
      *
      * @param array $data The data
-     *
-     * @return string
      */
     public function dump(array $data): string;
 }

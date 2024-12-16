@@ -30,8 +30,6 @@ interface FrontMatterInterface
      * Parse source.
      *
      * @param string $source The source
-     *
-     * @return Document
      */
     public function parse(string $source): Document;
 
@@ -39,8 +37,6 @@ interface FrontMatterInterface
      * Dump document.
      *
      * @param Document $document The document
-     *
-     * @return string
      */
     public function dump(Document $document): string;
 }

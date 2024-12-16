@@ -12,11 +12,16 @@
 
 namespace Processor;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Processor\ProcessorDecorator;
 use Webuni\FrontMatter\Processor\ProcessorInterface;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 final class ProcessorDecoratorTest extends TestCase
 {
     private MockObject $wrapped;
@@ -41,6 +46,4 @@ final class ProcessorDecoratorTest extends TestCase
     }
 }
 
-final class DummyProcessorDecorator extends ProcessorDecorator
-{
-}
+final class DummyProcessorDecorator extends ProcessorDecorator {}

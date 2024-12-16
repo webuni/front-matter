@@ -12,6 +12,8 @@
 
 namespace Webuni\FrontMatter\Tests\Twig;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Twig\Loader\LoaderInterface;
@@ -19,10 +21,15 @@ use Twig\Source;
 use Webuni\FrontMatter\FrontMatter;
 use Webuni\FrontMatter\Twig\FrontMatterLoader;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 final class FrontMatterLoaderTest extends TestCase
 {
     private FrontMatter $frontMatter;
-    /** @var MockObject&LoaderInterface */
+
+    /** @var LoaderInterface&MockObject */
     private MockObject $originalLoader;
     private FrontMatterLoader $loader;
 
@@ -54,9 +61,7 @@ final class FrontMatterLoaderTest extends TestCase
         self::assertTrue($loader->exists($name));
     }
 
-    /**
-     * @dataProvider getSource
-     */
+    #[DataProvider('getSource')]
     public function testGetSourceContext(string $source, string $content, array $data): void
     {
         $name = 'name';
@@ -75,7 +80,7 @@ final class FrontMatterLoaderTest extends TestCase
     public static function getSource(): array
     {
         return [
-            ["{{ foo }}", '{{ foo }}', []],
+            ['{{ foo }}', '{{ foo }}', []],
             ["---\nfoo: bar\n---\n{{ foo }}", "\n\n\n\n{{ foo }}", ['foo' => 'bar']],
         ];
     }

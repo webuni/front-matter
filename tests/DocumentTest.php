@@ -12,9 +12,14 @@
 
 namespace Webuni\FrontMatter\Tests;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Webuni\FrontMatter\Document;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 final class DocumentTest extends TestCase
 {
     public function testReturnContent(): void
