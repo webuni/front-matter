@@ -6,6 +6,7 @@ CHANGELOG
 
 * PHP 8.4 support
 * Drop PHP 7 support
+* Remove MtHAML filter
 
 2.0.0 (2024-02-22)
 ------------------

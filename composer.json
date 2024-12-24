@@ -31,7 +31,6 @@
         "ext-json": "*",
         "friendsofphp/php-cs-fixer": "^3.65",
         "league/commonmark": "^2.0",
-        "mthaml/mthaml": "^1.3",
         "nette/neon": "^2.2 || ^3.0",
         "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "^2.0",
