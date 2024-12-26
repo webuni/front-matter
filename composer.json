@@ -29,18 +29,18 @@
     },
     "require-dev": {
         "ext-json": "*",
+        "devium/toml": "^1.0",
         "friendsofphp/php-cs-fixer": "^3.65",
         "league/commonmark": "^2.0",
         "nette/neon": "^2.2 || ^3.0",
         "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "^2.0",
         "symfony/var-dumper": "*",
-        "twig/twig": "^3.0",
-        "yosymfony/toml": "^1.0"
+        "twig/twig": "^3.0"
     },
     "suggest": {
-        "nette/neon": "If you want to use NEON as front matter",
-        "yosymfony/toml": "If you want to use TOML as front matter"
+        "devium/toml": "If you want to use TOML v1.0.0 as front matter",
+        "nette/neon": "If you want to use NEON as front matter"
     },
     "config": {
         "sort-packages": true

@@ -12,13 +12,17 @@
 
 namespace Webuni\FrontMatter\Processor;
 
-use Yosymfony\Toml\Toml;
+use Devium\Toml\Toml;
+use Devium\Toml\TomlError;
 
 final class TomlProcessor implements ProcessorInterface
 {
+    /**
+     * @throws TomlError
+     */
     public function parse(string $string): array
     {
-        return (array) Toml::parse($string);
+        return (array) Toml::decode($string);
     }
 
     public function dump(array $data): string
