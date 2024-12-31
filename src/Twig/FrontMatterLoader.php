@@ -18,14 +18,9 @@ use Webuni\FrontMatter\FrontMatterInterface;
 
 class FrontMatterLoader implements LoaderInterface
 {
-    /** @var LoaderInterface */
-    private $loader;
-
-    /** @var FrontMatterInterface */
-    private $parser;
-
-    /** @var DataToTwigConvertor */
-    private $convertor;
+    private LoaderInterface $loader;
+    private FrontMatterInterface $parser;
+    private DataToTwigConvertor $convertor;
 
     public function __construct(
         FrontMatterInterface $parser,

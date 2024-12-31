@@ -14,11 +14,10 @@ namespace Webuni\FrontMatter;
 
 class Document
 {
-    /** @var string */
-    private $content;
+    private string $content;
 
     /** @var array<string, mixed> */
-    private $data;
+    private array $data;
 
     /**
      * @param array<string, mixed> $data

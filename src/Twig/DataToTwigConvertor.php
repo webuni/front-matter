@@ -79,10 +79,8 @@ class DataToTwigConvertor
 
     /**
      * @psalm-suppress MixedAssignment
-     *
-     * @param mixed $value
      */
-    protected static function valueToTwig($value): string
+    protected static function valueToTwig(mixed $value): string
     {
         if ($value instanceof \DateTimeInterface) {
             return '('.$value->getTimestamp()."|date_modify('0sec'))";

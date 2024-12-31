@@ -16,7 +16,7 @@ final class JsonWithoutBracesProcessor implements ProcessorInterface
 {
     public function parse(string $string): array
     {
-        if (false !== strpos($string, '":')) {
+        if (str_contains($string, '":')) {
             $string = '{'.$string.'}';
         }
 
@@ -31,7 +31,7 @@ final class JsonWithoutBracesProcessor implements ProcessorInterface
 
         $result = (string) json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        if ('{' === substr($result, 0, 1) && '}' === substr($result, -1)) {
+        if (str_starts_with($result, '{') && str_ends_with($result, '}')) {
             $result = substr($result, 1, -1);
         }
 

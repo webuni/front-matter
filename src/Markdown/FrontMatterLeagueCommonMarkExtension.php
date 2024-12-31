@@ -12,7 +12,7 @@
 
 namespace Webuni\FrontMatter\Markdown;
 
-use Dflydev\DotAccessData\Data;
+use Dflydev\DotAccessData\DataInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentPreParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
@@ -21,8 +21,7 @@ use Webuni\FrontMatter\FrontMatterInterface;
 
 class FrontMatterLeagueCommonMarkExtension implements ExtensionInterface
 {
-    /** @var FrontMatterInterface */
-    private $frontMatter;
+    private FrontMatterInterface $frontMatter;
 
     public function __construct(FrontMatterInterface $frontMatter)
     {
@@ -40,7 +39,7 @@ class FrontMatterLeagueCommonMarkExtension implements ExtensionInterface
         $document = $this->frontMatter->parse($content);
         $data = $event->getDocument()->data;
 
-        $data->import($document->getData(), Data::MERGE);
+        $data->import($document->getData(), DataInterface::MERGE);
         $event->replaceMarkdown(new MarkdownInput($document->getContent()));
     }
 }
