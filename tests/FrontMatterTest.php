@@ -68,6 +68,15 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
+    public static function getSeparator(): array
+    {
+        return [
+            ['foo', [], 'foo', false],
+            ["<!--\nfoo: bar\n-->\n", ['foo' => 'bar'], '', true],
+            ["<!--\nfoo: bar\n-->\ntext", ['foo' => 'bar'], 'text', true],
+        ];
+    }
+
     #[DataProvider('getJson')]
     public function testJson(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
@@ -77,6 +86,15 @@ final class FrontMatterTest extends TestCase
         self::assertSame($hasFrontMatter, $frontMatter->exists($string));
         self::assertDocument($data, $content, $document);
         self::assertEquals($string, $frontMatter->dump($document));
+    }
+
+    public static function getJson(): array
+    {
+        return [
+            ['foo', [], 'foo', false],
+            ["---\n{\"foo\":\"bar\"}\n---\n", ['foo' => 'bar'], '', true],
+            ["---\n{\"foo\":\"bar\"}\n---\ntext", ['foo' => 'bar'], 'text', true],
+        ];
     }
 
     #[DataProvider('getPlainJson')]
@@ -90,6 +108,15 @@ final class FrontMatterTest extends TestCase
         self::assertEquals($string, $frontMatter->dump($document));
     }
 
+    public static function getPlainJson(): array
+    {
+        return [
+            ['foo', [], 'foo', false],
+            ["{\n\"foo\":\"bar\"\n}\n", ['foo' => 'bar'], '', true],
+            ["{\n\"foo\":\"bar\"\n}\ntext", ['foo' => 'bar'], 'text', true],
+        ];
+    }
+
     #[DataProvider('getYaml')]
     public function testNeon(string $string, array $data, string $content, bool $hasFrontMatter): void
     {
@@ -99,6 +126,15 @@ final class FrontMatterTest extends TestCase
         self::assertSame($hasFrontMatter, $frontMatter->exists($string));
         self::assertDocument($data, $content, $document);
         self::assertEquals($string, $frontMatter->dump($document));
+    }
+
+    public static function getYaml(): array
+    {
+        return [
+            ['foo', [], 'foo', false],
+            ["---\nfoo: bar\n---\n", ['foo' => 'bar'], '', true],
+            ["---\nfoo: bar\n---\ntext", ['foo' => 'bar'], 'text', true],
+        ];
     }
 
     #[DataProvider('getToml')]
@@ -114,42 +150,6 @@ final class FrontMatterTest extends TestCase
         $this->expectExceptionMessage('Dump for Toml is not implemented.');
 
         self::assertEquals($string, $frontMatter->dump($document));
-    }
-
-    public static function getYaml(): array
-    {
-        return [
-            ['foo', [], 'foo', false],
-            ["---\nfoo: bar\n---\n", ['foo' => 'bar'], '', true],
-            ["---\nfoo: bar\n---\ntext", ['foo' => 'bar'], 'text', true],
-        ];
-    }
-
-    public static function getSeparator(): array
-    {
-        return [
-            ['foo', [], 'foo', false],
-            ["<!--\nfoo: bar\n-->\n", ['foo' => 'bar'], '', true],
-            ["<!--\nfoo: bar\n-->\ntext", ['foo' => 'bar'], 'text', true],
-        ];
-    }
-
-    public static function getJson(): array
-    {
-        return [
-            ['foo', [], 'foo', false],
-            ["---\n{\"foo\":\"bar\"}\n---\n", ['foo' => 'bar'], '', true],
-            ["---\n{\"foo\":\"bar\"}\n---\ntext", ['foo' => 'bar'], 'text', true],
-        ];
-    }
-
-    public static function getPlainJson(): array
-    {
-        return [
-            ['foo', [], 'foo', false],
-            ["{\n\"foo\":\"bar\"\n}\n", ['foo' => 'bar'], '', true],
-            ["{\n\"foo\":\"bar\"\n}\ntext", ['foo' => 'bar'], 'text', true],
-        ];
     }
 
     public static function getToml(): array

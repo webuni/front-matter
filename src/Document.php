@@ -12,7 +12,7 @@
 
 namespace Webuni\FrontMatter;
 
-class Document
+class Document implements \Stringable
 {
     private string $content;
 

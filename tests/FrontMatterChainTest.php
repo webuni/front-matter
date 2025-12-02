@@ -62,12 +62,6 @@ final class FrontMatterChainTest extends TestCase
         self::assertEquals($content, $document->getContent());
     }
 
-    public function testDumpViaFirstAdapter(): void
-    {
-        $source = $this->chain->dump(new Document('Content', ['foo' => 'bar']));
-        $this->assertSame("---\nfoo: bar\n---\nContent", $source);
-    }
-
     public static function getFrontMatter(): array
     {
         return [
@@ -75,5 +69,11 @@ final class FrontMatterChainTest extends TestCase
             ["---\nfoo: bar\n---\nContent", ['foo' => 'bar'], 'Content', true],
             ["{\n  \"foo\": \"bar\"\n}\nContent", ['foo' => 'bar'], 'Content', true],
         ];
+    }
+
+    public function testDumpViaFirstAdapter(): void
+    {
+        $source = $this->chain->dump(new Document('Content', ['foo' => 'bar']));
+        $this->assertSame("---\nfoo: bar\n---\nContent", $source);
     }
 }

@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix:
         deps_strategy: [ '', '--prefer-lowest' ]
-        php: [ '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
     steps:
       - name: Update code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

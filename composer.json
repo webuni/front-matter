@@ -25,14 +25,14 @@
     ],
     "require": {
         "php": "^8.1",
-        "symfony/yaml": "^3.4.31 || ^4.3.4 || ^5.0 || ^6.0 || ^7.0"
+        "symfony/yaml": "^3.4.31|^4.3.4|^5.0|^6.0|^7.0|^8.0"
     },
     "require-dev": {
         "ext-json": "*",
         "devium/toml": "^1.0",
         "friendsofphp/php-cs-fixer": "^3.65",
         "league/commonmark": "^2.0",
-        "nette/neon": "^2.2 || ^3.0",
+        "nette/neon": "^2.2|^3.0",
         "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "^2.0",
         "symfony/var-dumper": "*",

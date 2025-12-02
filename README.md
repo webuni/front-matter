@@ -8,22 +8,13 @@ Front Matter
 The most universal Front matter (yaml, json, neon, toml) parser and dumper for PHP.
 Front matter allows page-specific variables to be included at the top of a page.
 
-Installation
-------------
-
-This library can be installed via Composer:
-
-    composer require webuni/front-matter
-
-Usage
------
-
-### Automatic front matter detection and parsing
+Features
+--------
 
 This library can parse all form of front matter:
 
 <table>
-<thead><tr><th>YAML (Neon)</th><th>TOML</th><th>Twig</th><th>Pug</th><th>Json</th></tr></thead>
+<thead><tr><th>YAML (Neon)</th><th>TOML</th><th>Json</th><th>Twig</th><th>Pug</th></tr></thead>
 <tbody><tr>
 <td>
 
@@ -44,6 +35,19 @@ Text
 +++
 foo = bar
 +++
+
+# Section
+
+Text
+```
+
+</td>
+<td>
+
+```markdown
+{
+  "foo": "bar"
+}
 
 # Section
 
@@ -76,21 +80,20 @@ p= foo
 ```
 
 </td>
-<td>
-
-```markdown
-{
-  "foo": "bar"
-}
-
-# Section
-
-Text
-```
-
-</td>
 </tr></tbody>
 </table>
+
+Installation
+------------
+
+This library can be installed via Composer:
+
+    composer require webuni/front-matter
+
+Usage
+-----
+
+### Automatic front matter detection and parsing
 
 The following code will automatically detect the above front matter types:
 
