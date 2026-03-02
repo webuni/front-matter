@@ -53,6 +53,14 @@ final class FrontMatterTest extends TestCase
         self::assertDocument([], 'Content', $document);
     }
 
+    public function testYamlWithoutEndlines(): void
+    {
+        $frontMatter = new FrontMatter();
+        $document = $frontMatter->parse("---   ---\nContent");
+
+        self::assertDocument([], "---   ---\nContent", $document);
+    }
+
     #[DataProvider('getSeparator')]
     public function testYamlWithCustomSeparator(
         string $string,

@@ -36,6 +36,6 @@ final class PugCommentFrontMatter
 
     public static function create(?ProcessorInterface $processor = null): FrontMatter
     {
-        return new FrontMatter($processor ?? new YamlProcessor(), '//-', "\n");
+        return new FrontMatter($processor ?? new YamlProcessor(), '//-', '');
     }
 }

@@ -109,6 +109,6 @@ final class FrontMatter implements FrontMatterInterface
         $endSepQuoted = preg_quote($endSep);
         $newline = '[\r\n|\n]';
 
-        return "{^(?:{$startSepQuoted}){$newline}*(.*?){$newline}+(?:{$endSepQuoted}){$newline}*(.*)$}s";
+        return "{^(?:{$startSepQuoted}){$newline}+(.*?){$newline}+(?:{$endSepQuoted}){$newline}+(.*)$}s";
     }
 }

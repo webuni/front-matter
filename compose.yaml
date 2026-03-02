@@ -1,6 +1,6 @@
 services:
   php:
-    image: "minidocks/php:${PHP_VERSION:-8.4}"
+    image: "minidocks/php:${PHP_VERSION:-8.5}"
     volumes:
       - .:$PWD
       - ~/.composer/cache:/composer-cache

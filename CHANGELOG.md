@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.1.2 (2026-03-02)
+------------------
+
+* Fix parsing to require newlines around front matter separators
+
 2.1.1 (2025-12-02)
 ------------------
 
